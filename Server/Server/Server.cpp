@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "framework.h"
 #include "Server.h"
+#include <afxsock.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
