@@ -5,11 +5,14 @@
 #include "framework.h"
 #include "Server.h"
 #include <afxsock.h>
+#include <thread>
+#include "Client.h"
+
+#define NUMBERS_OF_THREAD 10
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 
 // The one and only application object
 
@@ -35,6 +38,8 @@ int main()
         else
         {
             // TODO: code your application's behavior here.
+            thread thr[NUMBERS_OF_THREAD];
+            Client* client_conector = new Client[NUMBERS_OF_THREAD];
             //Khai báo sử dụng socket trong Window
             if (!AfxSocketInit(NULL)) {
                 cout << "KHONG THE khoi tạo thu vien socket!\n";
@@ -55,8 +60,7 @@ int main()
                     return FALSE;
                 }
             }
-
-
+            socket_server.Close();
         }
     }
     else

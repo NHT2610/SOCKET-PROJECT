@@ -3,6 +3,8 @@
 
 #include "pch.h"
 #include "framework.h"
+#include <Windows.h>
+#include <WinSock2.h>
 #include "Client.h"
 
 #define MAX_LOADSTRING 100
@@ -24,10 +26,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+    UNREFERENCED_PARAMETER(lpCmdLine);  
 
     // TODO: Place code here.
-
+    //MB_OK|MB_ICONINFORMATION   MB_OK | MB_ICONERROR   MB_OK | MB_ICONWARNING   MB_YESNO|MB_ICONQUESTION
+    //MB_OK, MB_OKCANCEL, MB_YESNO, MB_YESNOCANCEL, MB_ICONINFORMATION, MB_ICONERROR, MB_ICONWARNING, MB_ICONQUESTION,...
+    int check = MessageBox(NULL, L"Ban muon dang nhap?", L"Login", MB_YESNO | MB_ICONQUESTION);
+    if (check == IDYES) {
+        MessageBoxA(NULL, "DANG NHAP / DANG KY\nUsername: \nPassword: ", "Login", MB_YESNO | MB_ICONINFORMATION);
+    }
+    else { exit(1); }
+    MessageBeep(0);
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
