@@ -35,6 +35,28 @@ int main()
         else
         {
             // TODO: code your application's behavior here.
+            //Khai báo sử dụng socket trong Window
+            if (!AfxSocketInit(NULL)) {
+                cout << "KHONG THE khoi tạo thu vien socket!\n";
+                return FALSE;
+            }
+            CSocket socket_server;//Socket của server
+            //Khởi tạo socket với port 12345
+            if (!socket_server.Create(12345, SOCK_STREAM, NULL)) {//Truyền kiểu socket: SOCK_STREAM <=> sử dụng giao thức TCP
+                cout << "Khoi tao THAT BAI!\n";
+                cout << socket_server.GetLastError();//Lấy mã lỗi khởi tạo không thành công
+                return FALSE;
+            }
+            else {
+                cout << "Server khoi tao THANH CONG!\n";
+                if (!socket_server.Listen(3)) {
+                    cout << "KHONG THE ket noi tren port nay!\n";
+                    socket_server.Close();
+                    return FALSE;
+                }
+            }
+
+
         }
     }
     else

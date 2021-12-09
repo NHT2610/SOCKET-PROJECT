@@ -31,3 +31,4 @@
 *.out
 *.app
 /Server/.vs/Server/v17
+/Client/.vs/Client/v17
