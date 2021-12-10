@@ -7,6 +7,7 @@
 #include "Client.h"
 #include "ClientDlg.h"
 #include "afxdialogex.h"
+#include "login.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -52,6 +53,7 @@ END_MESSAGE_MAP()
 
 CClientDlg::CClientDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_CLIENT_DIALOG, pParent)
+	, IP_server(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -59,12 +61,15 @@ CClientDlg::CClientDlg(CWnd* pParent /*=nullptr*/)
 void CClientDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IP_SERVER, IP_server);
 }
 
 BEGIN_MESSAGE_MAP(CClientDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(CONNECT, &CClientDlg::OnBnClickedConnect)
+	ON_EN_CHANGE(IP_SERVER, &CClientDlg::OnEnChangeServer)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +158,63 @@ HCURSOR CClientDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+//Hàm kiểm tra việc nhập IP
+bool CClientDlg::checkIP(CString& ip) {
+	if (!ip.GetLength() || !isdigit(ip[0])) { return FALSE; }
+	int a = -1, b = -1, c = -1, d = -1;
+	int count = 1;
+	int j;
+	CString temp;
+	for (int i = 0; i < int(ip.GetLength()); ++i) {
+		for (j = i; j < int(ip.GetLength()) && ip[j] != '.'; ++j) {
+			if (isdigit(ip[j])) { temp += ip[j]; }
+			else { return FALSE; }
+		}
+		switch (count)
+		{
+		case 1: a = _wtoi(temp); break;
+		case 2: b = _wtoi(temp); break;
+		case 3: c = _wtoi(temp); break;
+		default: d = _wtoi(temp); break;
+		}
+		++count;
+		temp = "";
+		i = j;
+	}
+	if (a < 0 || b < 0 || c < 0 || d < 0) { return FALSE; }
+	return TRUE;
+}
+
+void CClientDlg::OnBnClickedConnect()
+{
+	// TODO: Add your control notification handler code here
+	CSocket client_socket;
+	if (!client_socket.Create()) {
+		MessageBox(L"Khoi tao socket KHONG thanh cong!", L"Warning", MB_OK | MB_ICONWARNING);
+		exit(1);
+	}
+	GetDlgItemText(IP_SERVER, IP_server);
+	if (!checkIP(IP_server)) {
+		MessageBox(L"Vui long kiem tra lại IP!", L"Error", MB_OK | MB_ICONERROR);
+	}
+	else {
+		if (!client_socket.Connect(IP_server, 12345)) {
+			MessageBox(L"Ket noi den server THAT BAI!", L"Infomation", MB_OK | MB_ICONINFORMATION);
+		}
+		else {
+			login new_login;
+			new_login.DoModal();
+		}
+	}
+}
+
+void CClientDlg::OnEnChangeServer()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+	
+}

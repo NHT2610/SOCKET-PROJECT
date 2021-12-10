@@ -31,4 +31,11 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+	//Hàm kiểm tra việc nhập IP
+	bool checkIP(CString& ip);
+private:
+	CString IP_server;
+public:
+	afx_msg void OnEnChangeServer();
+	afx_msg void OnBnClickedConnect();
 };
