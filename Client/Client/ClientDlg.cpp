@@ -7,12 +7,12 @@
 #include "Client.h"
 #include "ClientDlg.h"
 #include "afxdialogex.h"
-#include "login.h"
+
+#include "Login.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 
 // CAboutDlg dialog used for App About
 
@@ -53,7 +53,6 @@ END_MESSAGE_MAP()
 
 CClientDlg::CClientDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_CLIENT_DIALOG, pParent)
-	, IP_server(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -61,15 +60,15 @@ CClientDlg::CClientDlg(CWnd* pParent /*=nullptr*/)
 void CClientDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IP_SERVER, IP_server);
+	DDX_Control(pDX, IP_SERVER, IP_server);
 }
 
 BEGIN_MESSAGE_MAP(CClientDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(CONNECT, &CClientDlg::OnBnClickedConnect)
-	ON_EN_CHANGE(IP_SERVER, &CClientDlg::OnEnChangeServer)
+	ON_NOTIFY(IPN_FIELDCHANGED, IP_SERVER, &CClientDlg::OnIpnFieldchangedServer)
+	ON_BN_CLICKED(CONNECT_BUUTON, &CClientDlg::OnBnClickedBuuton)
 END_MESSAGE_MAP()
 
 
@@ -158,6 +157,15 @@ HCURSOR CClientDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CClientDlg::OnIpnFieldchangedServer(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMIPADDRESS pIPAddr = reinterpret_cast<LPNMIPADDRESS>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
+}
+
 //Hàm kiểm tra việc nhập IP
 bool CClientDlg::checkIP(CString& ip) {
 	if (!ip.GetLength() || !isdigit(ip[0])) { return FALSE; }
@@ -185,36 +193,32 @@ bool CClientDlg::checkIP(CString& ip) {
 	return TRUE;
 }
 
-void CClientDlg::OnBnClickedConnect()
+void CClientDlg::OnBnClickedBuuton()
 {
 	// TODO: Add your control notification handler code here
 	CSocket client_socket;
 	if (!client_socket.Create()) {
-		MessageBox(L"Khoi tao socket KHONG thanh cong!", L"Warning", MB_OK | MB_ICONWARNING);
+		MessageBox(L"Khoi tao socket THAT BAI!", L"Warning", MB_OK | MB_ICONWARNING);
 		exit(1);
 	}
-	GetDlgItemText(IP_SERVER, IP_server);
-	if (!checkIP(IP_server)) {
-		MessageBox(L"Vui long kiem tra lại IP!", L"Error", MB_OK | MB_ICONERROR);
+	ipAddress = _T("");
+	GetDlgItem(IP_SERVER)->GetWindowTextW(ipAddress);
+	if (IP_server.IsBlank() || !checkIP(ipAddress)) {
+		MessageBox(L"Vui long kiem tra lai IP!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	else {
-		if (!client_socket.Connect(IP_server, 12345)) {
+		if (!client_socket.Connect(ipAddress, 12345)) {
 			MessageBox(L"Ket noi den server THAT BAI!", L"Infomation", MB_OK | MB_ICONINFORMATION);
 		}
 		else {
-			login new_login;
-			new_login.DoModal();
+			Login new_login;
+			INT_PTR button1 = new_login.DoModal();
+			/*if (button1 == LOGIN) {
+				new_login.OnBnClickedLogin();
+			}
+			if (button1 == SIGNUP1) {
+
+			}*/
 		}
 	}
-}
-
-void CClientDlg::OnEnChangeServer()
-{
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CDialogEx::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
-
-	// TODO:  Add your control notification handler code here
-	
 }

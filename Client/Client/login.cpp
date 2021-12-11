@@ -1,19 +1,17 @@
-﻿// login.cpp : implementation file
+﻿// Login.cpp : implementation file
 //
 
 #include "pch.h"
 #include "Client.h"
 #include "afxdialogex.h"
-#include "login.h"
-#include "SignUp.h"
-#include "MainDialog.h"
+#include "Login.h"
 
 
-// login dialog
+// Login dialog
 
-IMPLEMENT_DYNAMIC(login, CDialogEx)
+IMPLEMENT_DYNAMIC(Login, CDialogEx)
 
-login::login(CWnd* pParent /*=nullptr*/)
+Login::Login(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG1, pParent)
 	, username(_T(""))
 	, password(_T(""))
@@ -21,14 +19,14 @@ login::login(CWnd* pParent /*=nullptr*/)
 #ifndef _WIN32_WCE
 	EnableActiveAccessibility();
 #endif
-
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-login::~login()
+Login::~Login()
 {
 }
 
-void login::DoDataExchange(CDataExchange* pDX)
+void Login::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, USERNAME, username);
@@ -36,24 +34,87 @@ void login::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(login, CDialogEx)
-	ON_BN_CLICKED(SIGNUP, &login::OnBnClickedSignup)
-	ON_BN_CLICKED(SIGNIN, &login::OnBnClickedSignin)
+BEGIN_MESSAGE_MAP(Login, CDialogEx)
+	ON_BN_CLICKED(LOGIN, &Login::OnBnClickedLogin)
+	ON_BN_CLICKED(LOGIN, &Login::OnBnClickedLogin)
+	ON_BN_CLICKED(SIGNUP1, &Login::OnBnClickedSignup1)
 END_MESSAGE_MAP()
 
 
-// login message handlers
+// Login message handlers
 
-
-void login::OnBnClickedSignup()
+BOOL Login::OnInitDialog()
 {
-	// TODO: Add your control notification handler code here
-	SignUp new_acc;
-	new_acc.DoModal();
+	CDialogEx::OnInitDialog();
+
+	// Add "About..." menu item to system menu.
+
+	// IDM_ABOUTBOX must be in the system command range.
+	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
+	ASSERT(IDM_ABOUTBOX < 0xF000);
+
+	CMenu* pSysMenu = GetSystemMenu(FALSE);
+	if (pSysMenu != nullptr)
+	{
+		BOOL bNameValid;
+		CString strAboutMenu;
+		bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
+		ASSERT(bNameValid);
+		if (!strAboutMenu.IsEmpty())
+		{
+			pSysMenu->AppendMenu(MF_SEPARATOR);
+			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+		}
+	}
+
+	// Set the icon for this dialog.  The framework does this automatically
+	//  when the application's main window is not a dialog
+	SetIcon(m_hIcon, TRUE);			// Set big icon
+	SetIcon(m_hIcon, FALSE);		// Set small icon
+
+	// TODO: Add extra initialization here
+
+	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+// If you add a minimize button to your dialog, you will need the code below
+//  to draw the icon.  For MFC applications using the document/view model,
+//  this is automatically done for you by the framework.
+
+void Login::OnPaint()
+{
+	if (IsIconic())
+	{
+		CPaintDC dc(this); // device context for painting
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// Center icon in client rectangle
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// Draw the icon
+		dc.DrawIcon(x, y, m_hIcon);
+	}
+	else
+	{
+		CDialogEx::OnPaint();
+	}
+}
+
+// The system calls this function to obtain the cursor to display while the user drags
+//  the minimized window.
+HCURSOR Login::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
 }
 
 //Hàm kiểm tra định dạng username
-int login::checkUsername(CString& name) {
+int Login::checkUsername(CString& name) {
 	int len = int(name.GetLength());
 	if (!len) { return 1; }
 	int i = 0;
@@ -64,7 +125,7 @@ int login::checkUsername(CString& name) {
 }
 
 //Hàm kiểm tra định dạng password
-int login::checkPassword(CString& pass) {
+int Login::checkPassword(CString& pass) {
 	int len = int(pass.GetLength());
 	if (!len) { return 1; }
 	int i = 0;
@@ -74,7 +135,8 @@ int login::checkPassword(CString& pass) {
 	return 0;
 }
 
-void login::OnBnClickedSignin()
+
+void Login::OnBnClickedLogin()
 {
 	// TODO: Add your control notification handler code here
 	GetDlgItemText(USERNAME, username);
@@ -91,6 +153,10 @@ void login::OnBnClickedSignin()
 	else if (checkPassword(password) == 2) {
 		MessageBox(L"Mat khau KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
 	}
-	MainDialog client_GUI;
-	client_GUI.DoModal();
+}
+
+
+void Login::OnBnClickedSignup1()
+{
+	// TODO: Add your control notification handler code here
 }
