@@ -6,11 +6,13 @@
 #include "framework.h"
 #include "Client.h"
 #include "ClientDlg.h"
+#include "ClientSocket.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+ClientSocket client_socket;
 
 // CClientApp
 

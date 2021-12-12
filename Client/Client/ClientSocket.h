@@ -1,5 +1,19 @@
 #pragma once
-#include <afxsock.h>
+#include "framework.h"
 
 //Khai báo socket cho client
-CSocket client_socket;
+
+
+class ClientSocket
+{
+private:
+	CSocket soc;
+public:
+	ClientSocket();
+	~ClientSocket();
+	bool create();
+	void close();
+	bool connect(const CString ip, const int port);
+};
+
+extern ClientSocket client_socket;

@@ -7,7 +7,7 @@
 #include "Client.h"
 #include "ClientDlg.h"
 #include "afxdialogex.h"
-
+#include "ClientSocket.h"
 #include "Login.h"
 
 #ifdef _DEBUG
@@ -69,6 +69,7 @@ BEGIN_MESSAGE_MAP(CClientDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_NOTIFY(IPN_FIELDCHANGED, IP_SERVER, &CClientDlg::OnIpnFieldchangedServer)
 	ON_BN_CLICKED(CONNECT_BUUTON, &CClientDlg::OnBnClickedBuuton)
+	ON_BN_CLICKED(EXIT1, &CClientDlg::OnBnClickedExit1)
 END_MESSAGE_MAP()
 
 
@@ -193,32 +194,39 @@ bool CClientDlg::checkIP(CString& ip) {
 	return TRUE;
 }
 
+//Hàm xử lý khi click vào nút KẾT NỐI
 void CClientDlg::OnBnClickedBuuton()
 {
 	// TODO: Add your control notification handler code here
-	CSocket client_socket;
-	if (!client_socket.Create()) {
-		MessageBox(L"Khoi tao socket THAT BAI!", L"Warning", MB_OK | MB_ICONWARNING);
-		exit(1);
+	if (!client_socket.create()) {
+		MessageBox(L"Khoi tao socket KHONG thanh cong!", L"Warning", MB_OK | MB_ICONWARNING);
 	}
-	ipAddress = _T("");
+	CString ipAddress = _T("");
 	GetDlgItem(IP_SERVER)->GetWindowTextW(ipAddress);
 	if (IP_server.IsBlank() || !checkIP(ipAddress)) {
-		MessageBox(L"Vui long kiem tra lai IP!", L"Error", MB_OK | MB_ICONERROR);
+		int ID = MessageBox(L"Vui long kiem tra lai IP!", L"Error", MB_OK | MB_ICONERROR);
+		if (ID == IDOK) {
+			client_socket.close();
+		}
 	}
 	else {
-		if (!client_socket.Connect(ipAddress, 12345)) {
-			MessageBox(L"Ket noi den server THAT BAI!", L"Infomation", MB_OK | MB_ICONINFORMATION);
+		if (!client_socket.connect(ipAddress, 12345)) {
+			int ID = MessageBox(L"Ket noi den server THAT BAI!", L"Infomation", MB_OK | MB_ICONINFORMATION);
+			if (ID == IDOK) {
+				client_socket.close();
+			}
 		}
 		else {
 			Login new_login;
 			INT_PTR button1 = new_login.DoModal();
-			/*if (button1 == LOGIN) {
-				new_login.OnBnClickedLogin();
-			}
-			if (button1 == SIGNUP1) {
-
-			}*/
 		}
 	}
+}
+
+//Hàm xử lý khi click vào nút THOÁT
+void CClientDlg::OnBnClickedExit1()
+{
+	// TODO: Add your control notification handler code here
+	client_socket.close();
+	exit(1);
 }

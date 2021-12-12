@@ -5,6 +5,8 @@
 #include "Client.h"
 #include "afxdialogex.h"
 #include "Login.h"
+#include "MainDialog.h"
+#include "SignUp.h"
 
 
 // Login dialog
@@ -141,22 +143,29 @@ void Login::OnBnClickedLogin()
 	// TODO: Add your control notification handler code here
 	GetDlgItemText(USERNAME, username);
 	GetDlgItemText(PASSWORD, password);
-	if (checkUsername(username) == 1) {
-		MessageBox(L"Ban CHUA dien Ten dang nhap!", L"Error", MB_OK | MB_ICONERROR);
+	if (checkUsername(username) || checkPassword(password)) {
+		if (checkUsername(username) == 1) {
+			MessageBox(L"Ban CHUA dien Ten dang nhap!", L"Error", MB_OK | MB_ICONERROR);
+		}
+		else if (checkUsername(username) == 2) {
+			MessageBox(L"Ten dang nhap KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
+		}
+		if (checkPassword(password) == 1) {
+			MessageBox(L"Ban CHUA dien Mat khau!", L"Error", MB_OK | MB_ICONERROR);
+		}
+		else if (checkPassword(password) == 2) {
+			MessageBox(L"Mat khau KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
+		}
 	}
-	else if (checkUsername(username) == 2) {
-		MessageBox(L"Ten dang nhap KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
-	}
-	if (checkPassword(password) == 1) {
-		MessageBox(L"Ban CHUA dien Mat khau!", L"Error", MB_OK | MB_ICONERROR);
-	}
-	else if (checkPassword(password) == 2) {
-		MessageBox(L"Mat khau KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
-	}
+	
+		MainDialog main;
+		main.DoModal();
 }
 
 
 void Login::OnBnClickedSignup1()
 {
 	// TODO: Add your control notification handler code here
+	SignUp new_register;
+	new_register.DoModal();
 }

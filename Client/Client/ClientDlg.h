@@ -35,8 +35,10 @@ protected:
 	bool checkIP(CString& ip);
 private:
 	CIPAddressCtrl IP_server;
-	CString ipAddress;
 public:
 	afx_msg void OnIpnFieldchangedServer(NMHDR* pNMHDR, LRESULT* pResult);
+	//Hàm click vào nút KẾT NỐI
 	afx_msg void OnBnClickedBuuton();
+	//Hàm click vào nút THOÁT
+	afx_msg void OnBnClickedExit1();
 };
