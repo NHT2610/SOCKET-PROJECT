@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "afxdialogex.h"
-#include <afxsock.h>
 
 // Login dialog
 

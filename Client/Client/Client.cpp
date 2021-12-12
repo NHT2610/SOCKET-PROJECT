@@ -4,15 +4,17 @@
 
 #include "pch.h"
 #include "framework.h"
+#include "afxdialogex.h"
 #include "Client.h"
 #include "ClientDlg.h"
 #include "ClientSocket.h"
 
+ClientSocket client_socket;
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
-#endif
+#endif	
 
-ClientSocket client_socket;
 
 // CClientApp
 

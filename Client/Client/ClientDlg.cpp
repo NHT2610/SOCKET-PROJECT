@@ -217,6 +217,7 @@ void CClientDlg::OnBnClickedBuuton()
 			}
 		}
 		else {
+			//Khai báo đối tượng của lớp Login và khởi tạo một Dialog mới
 			Login new_login;
 			INT_PTR button1 = new_login.DoModal();
 		}
@@ -227,6 +228,7 @@ void CClientDlg::OnBnClickedBuuton()
 void CClientDlg::OnBnClickedExit1()
 {
 	// TODO: Add your control notification handler code here
+	client_socket.SendMessage(_T("QUIT"));
 	client_socket.close();
 	exit(1);
 }

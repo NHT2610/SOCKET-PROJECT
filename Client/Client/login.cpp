@@ -7,7 +7,7 @@
 #include "Login.h"
 #include "MainDialog.h"
 #include "SignUp.h"
-
+#include "ClientSocket.h"
 
 // Login dialog
 
@@ -119,9 +119,15 @@ HCURSOR Login::OnQueryDragIcon()
 int Login::checkUsername(CString& name) {
 	int len = int(name.GetLength());
 	if (!len) { return 1; }
+	char SpecialCharacters[] = { '~','`','!','@','#','$','%','^','&','*','(',')','-','_',
+		'=','+','{','}','[',']','|',':',';','"',',','<','>','.','?','/' };
 	int i = 0;
+	int size = int(sizeof(SpecialCharacters) / sizeof(char));
 	while (i < len) {
-		if (name[i] == ' ') { return 2; }
+		for (int j = 0; j < size; ++j) {
+			if (name[i] == SpecialCharacters[j]) { return 2; }
+		}
+		++i;
 	}
 	return 0;
 }
@@ -133,6 +139,7 @@ int Login::checkPassword(CString& pass) {
 	int i = 0;
 	while (i < len) {
 		if (pass[i] == ' ') { return 2; }
+		++i;
 	}
 	return 0;
 }
@@ -143,23 +150,31 @@ void Login::OnBnClickedLogin()
 	// TODO: Add your control notification handler code here
 	GetDlgItemText(USERNAME, username);
 	GetDlgItemText(PASSWORD, password);
-	if (checkUsername(username) || checkPassword(password)) {
-		if (checkUsername(username) == 1) {
-			MessageBox(L"Ban CHUA dien Ten dang nhap!", L"Error", MB_OK | MB_ICONERROR);
+	if (checkUsername(username) == 1) {
+		MessageBox(L"Ban CHUA dien Ten dang nhap!", L"Error", MB_OK | MB_ICONERROR);
+	}
+	else if (checkUsername(username) == 2) {
+		MessageBox(L"Ten dang nhap KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
+	}
+	if (checkPassword(password) == 1) {
+		MessageBox(L"Ban CHUA dien Mat khau!", L"Error", MB_OK | MB_ICONERROR);
+	}
+	else if (checkPassword(password) == 2) {
+		MessageBox(L"Mat khau KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
+	}
+	if (!checkUsername(username) && !checkPassword(password)) {
+		int check_login = client_socket.login(username, password, _T("LOGIN"));
+		if (check_login == 1) {
+			MessageBox(L"Ten dang nhap KHONG ton tai!", L"Error", MB_OK | MB_ICONERROR);
 		}
-		else if (checkUsername(username) == 2) {
-			MessageBox(L"Ten dang nhap KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
+		else if (check_login == 2) {
+			MessageBox(L"Mat khau KHONG dung!", L"Error", MB_OK | MB_ICONERROR);
 		}
-		if (checkPassword(password) == 1) {
-			MessageBox(L"Ban CHUA dien Mat khau!", L"Error", MB_OK | MB_ICONERROR);
-		}
-		else if (checkPassword(password) == 2) {
-			MessageBox(L"Mat khau KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
+		else {
+			MainDialog main;
+			main.DoModal();
 		}
 	}
-	
-		MainDialog main;
-		main.DoModal();
 }
 
 
