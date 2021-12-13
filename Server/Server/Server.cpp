@@ -6,7 +6,7 @@
 #include "Server.h"
 #include <afxsock.h>
 #include <thread>
-#include "Client.h"
+#include "ConnectThread.h"
 
 #define NUMBERS_OF_THREAD 10
 
