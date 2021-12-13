@@ -32,4 +32,10 @@ private:
 	CString RePassword;
 public:
 	afx_msg void OnBnClickedSignup2();
+	//Hàm kiểm tra định dạng username
+	int checkUsername(CString& name);
+	//Hàm kiểm tra định dạng password
+	int checkPassword(CString& pass);
+	//Hàm kiểm tra việc nhập lại password
+	bool checkRePass(CString& pass, CString& repass);
 };

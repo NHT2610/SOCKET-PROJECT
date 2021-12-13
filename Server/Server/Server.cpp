@@ -39,7 +39,7 @@ int main()
         {
             // TODO: code your application's behavior here.
             thread thr[NUMBERS_OF_THREAD];
-            Client* client_conector = new Client[NUMBERS_OF_THREAD];
+            
             //Khai báo sử dụng socket trong Window
             if (!AfxSocketInit(NULL)) {
                 cout << "KHONG THE khoi tạo thu vien socket!\n";
@@ -53,7 +53,7 @@ int main()
                 return FALSE;
             }
             else {
-                cout << "Server khoi tao THANH CONG!\n";
+                cout << "DANG DOI KET NOI TU CLIENT\n";
                 if (!socket_server.Listen(3)) {
                     cout << "KHONG THE ket noi tren port nay!\n";
                     socket_server.Close();

@@ -1,0 +1,19 @@
+﻿  pch.cpp
+  Client.cpp
+  ClientDlg.cpp
+  ClientSocket.cpp
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(41,23): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(55,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(67,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(73,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(90,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(102,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(108,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Login.cpp
+  MainDialog.cpp
+  SignUp.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 250 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Client.vcxproj -> D:\ĐỒ ÁN SOCKET\Client\x64\Release\Client.exe

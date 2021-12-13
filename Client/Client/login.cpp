@@ -144,7 +144,7 @@ int Login::checkPassword(CString& pass) {
 	return 0;
 }
 
-
+//Hàm xử lý khi click vào nút ĐĂNG NHẬP
 void Login::OnBnClickedLogin()
 {
 	// TODO: Add your control notification handler code here
@@ -177,7 +177,7 @@ void Login::OnBnClickedLogin()
 	}
 }
 
-
+//Hàm xử lý khi click vào nút ĐĂNG KÝ của Dialog Login
 void Login::OnBnClickedSignup1()
 {
 	// TODO: Add your control notification handler code here
