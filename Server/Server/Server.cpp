@@ -7,6 +7,7 @@
 #include <afxsock.h>
 #include <thread>
 #include "ConnectThread.h"
+#include <winsqlite/winsqlite3.h>
 
 #define NUMBERS_OF_THREAD 10
 

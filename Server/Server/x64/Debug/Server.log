@@ -1,0 +1,6 @@
+﻿  pch.cpp
+  ConnectThread.cpp
+  Server.cpp
+D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(45,25): warning C4566: character represented by universal-character-name '\u1EA1' cannot be represented in the current code page (1252)
+  Generating Code...
+  Server.vcxproj -> D:\ĐỒ ÁN SOCKET\Server\x64\Debug\Server.exe
