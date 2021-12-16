@@ -39,8 +39,9 @@ int main()
         else
         {
             // TODO: code your application's behavior here.
-            thread thr[NUMBERS_OF_THREAD];
-            
+            CSocket connect[NUMBERS_OF_THREAD];
+            int count = 0;
+
             //Khai báo sử dụng socket trong Window
             if (!AfxSocketInit(NULL)) {
                 cout << "KHONG THE khoi tạo thu vien socket!\n";
@@ -54,12 +55,14 @@ int main()
                 return FALSE;
             }
             else {
-                cout << "DANG DOI KET NOI TU CLIENT\n";
-                if (!socket_server.Listen(3)) {
-                    cout << "KHONG THE ket noi tren port nay!\n";
-                    socket_server.Close();
-                    return FALSE;
+                cout << "DANG DOI KET NOI TU CLIENT...\n";
+                socket_server.Listen(1);
+                if (socket_server.Accept(connect[0])) {
+                    cout << "Client da ket noi!\n";
+                    thread thr1(ConnectThread(), ref(connect[0]), 1);
+                    //thr1.join();
                 }
+                
             }
             socket_server.Close();
         }

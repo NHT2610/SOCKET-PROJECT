@@ -2,12 +2,13 @@
 #include <afxsock.h>
 #include <vector>
 #include <string>
+#include <winsqlite/winsqlite3.h>
+#include <sql.h>
 using namespace std;
 
 class ConnectThread
 {
 public:
-	vector<string> split_string(string s, char ch);
 	void operator()(CSocket& client, int NumberCode);
 };
 
