@@ -1,5 +1,17 @@
-﻿  ConnectThread.cpp
-  Server.cpp
-D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(47,25): warning C4566: character represented by universal-character-name '\u1EA1' cannot be represented in the current code page (1252)
+﻿  Server.cpp
+D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(66,33): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(66,33): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(95,3): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(95,3): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(96,3): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(96,3): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+  ServerDlg.cpp
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(80,2): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(80,2): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(81,2): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(81,2): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(89,3): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(89,3): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+  ServerManager.cpp
   Generating Code...
   Server.vcxproj -> D:\ĐỒ ÁN SOCKET\Server\x64\Debug\Server.exe

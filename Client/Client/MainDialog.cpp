@@ -31,6 +31,9 @@ void MainDialog::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(MainDialog, CDialogEx)
+	ON_WM_SYSCOMMAND()
+	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
 END_MESSAGE_MAP()
 
 
@@ -95,6 +98,22 @@ void MainDialog::OnPaint()
 	}
 	else
 	{
+		//Snippet 01: Get Client Coordinate of the Rectangle
+		CRect ClinetRect;
+		this->GetClientRect(&ClinetRect);
+
+		//Snippet 02: Declare Device Contexts and bitmap
+		CDC memoryDC;
+		CPaintDC DialogDC(this);
+		CBitmap tiledImage;
+
+		//Snippet 03: Load Image to Memory
+		memoryDC.CreateCompatibleDC(&DialogDC);
+		tiledImage.LoadBitmap(IDB_BITMAP1);
+		memoryDC.SelectObject(&tiledImage);
+
+		//Snippet 04: Copy memory pixels to dialog surface
+		DialogDC.BitBlt(0, 0, ClinetRect.Width(), ClinetRect.Height(), &memoryDC, 0, 0, SRCCOPY);
 		CDialogEx::OnPaint();
 	}
 }
