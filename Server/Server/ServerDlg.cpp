@@ -7,6 +7,9 @@
 #include "Server.h"
 #include "ServerDlg.h"
 #include "afxdialogex.h"
+#include "ServerManager.h"
+
+ServerManager ServerSock;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -65,6 +68,8 @@ BEGIN_MESSAGE_MAP(CServerDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(STOP, &CServerDlg::OnBnClickedStop)
+	ON_BN_CLICKED(START, &CServerDlg::OnBnClickedStart)
 END_MESSAGE_MAP()
 
 
@@ -169,3 +174,26 @@ HCURSOR CServerDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CServerDlg::OnBnClickedStop()
+{
+	// TODO: Add your control notification handler code here
+	ServerSock.ServerSend("DISCONNECT");
+	ServerSock.ServerClose();
+	exit(1);
+}
+
+//Khởi tạo kết nối, cho phép client kết nối đến server
+void CServerDlg::OnBnClickedStart()
+{
+	// TODO: Add your control notification handler code here
+	if (!ServerSock.ServerCreate(12345)) {
+		MessageBox(L"Khoi tao server THAT BAI!", L"Information", MB_OK | MB_ICONINFORMATION);
+		exit(1);
+	}
+	ServerSock.ServerListen();
+	if (ServerSock.ServerAccept()) {
+		ServerSock.MainProcess();
+	}
+}

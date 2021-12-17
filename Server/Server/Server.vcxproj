@@ -212,6 +212,9 @@
     <Image Include="res\bitmap1.bmp" />
     <Image Include="res\Server.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="ACCOUNT.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

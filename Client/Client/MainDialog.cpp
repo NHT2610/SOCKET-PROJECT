@@ -5,6 +5,7 @@
 #include "Client.h"
 #include "afxdialogex.h"
 #include "MainDialog.h"
+#include "ClientSocket.h"
 
 
 // MainDialog dialog
@@ -34,6 +35,8 @@ BEGIN_MESSAGE_MAP(MainDialog, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATETIMEPICKER1, &MainDialog::OnDtnDatetimechangeDatetimepicker1)
+	ON_BN_CLICKED(IDC_BUTTON1, &MainDialog::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -123,4 +126,26 @@ void MainDialog::OnPaint()
 HCURSOR MainDialog::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+void MainDialog::OnDtnDatetimechangeDatetimepicker1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMDATETIMECHANGE pDTChange = reinterpret_cast<LPNMDATETIMECHANGE>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
+}
+
+
+void MainDialog::OnBnClickedButton1()
+{
+	// TODO: Add your control notification handler code here
+	client_socket.SendMessageW(_T("QUIT"));
+	int select = MessageBox(L"Ban co muon thoat?", L"Question", MB_YESNO | MB_ICONQUESTION);
+	if (select == IDYES) {
+		client_socket.SendMessageW(_T("YES"));
+		client_socket.close();
+	}
+	else if (select == IDNO) {
+		client_socket.SendMessageW(_T("NO"));
+	}
 }

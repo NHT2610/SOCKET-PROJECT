@@ -11,8 +11,8 @@
 #define IDB_BITMAP1                     130
 #define SERVERINFO                      1000
 #define START                           1001
-#define IDC_BUTTON2                     1002
 #define STOP                            1002
+#define IDC_DATETIMEPICKER1             1003
 
 // Next default values for new objects
 // 
@@ -20,7 +20,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        131
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1003
+#define _APS_NEXT_CONTROL_VALUE         1004
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

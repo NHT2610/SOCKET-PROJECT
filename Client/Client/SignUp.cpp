@@ -137,7 +137,7 @@ int SignUp::checkPassword(CString& pass) {
 	if (!len) { return 1; }
 	int i = 0;
 	while (i < len) {
-		if (pass[i] == ' ') { return 2; }
+		if (pass[i] == ' ' || pass[i] == '|') { return 2; }
 		++i;
 	}
 	return 0;
@@ -166,7 +166,7 @@ void SignUp::OnBnClickedSignup2()
 		MessageBox(L"Ban CHUA dien Mat khau!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	else if (checkPassword(SignupPassword) == 2) {
-		MessageBox(L"Mat khau KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Mat khau KHONG duoc chua khoang trang hoac ky tu '|'!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	if (!checkRePass(SignupPassword, RePassword)) {
 		MessageBox(L"Mat khau nhap lai KHONG khop!", L"Error", MB_OK | MB_ICONERROR);
