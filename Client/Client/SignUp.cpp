@@ -176,7 +176,7 @@ void SignUp::OnBnClickedSignup2()
 	{
 		int checkRegister = client_socket.Register(SignupUsername, SignupPassword, _T("REGISTER"));
 		if (checkRegister == 1) {
-			MessageBox(L"Ten dang nhap da ton tai!", L"Warning", MB_OK | MB_ICONWARNING);
+			MessageBox(L"Ten dang nhap da ton tai!", L"Information", MB_OK | MB_ICONINFORMATION);
 		}
 		else {
 			MessageBox(L"Dang ky THANH CONG!", L"Information", MB_OK | MB_ICONINFORMATION);

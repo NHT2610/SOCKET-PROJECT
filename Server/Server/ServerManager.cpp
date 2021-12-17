@@ -74,9 +74,10 @@ void ServerManager::GetAccountDataFromFile(const char* FileName) {
 //Ghi dữ liệu xuống file ACCOUNT.txt
 void ServerManager::WriteAccountDataToFile(const char* FileName) {
 	Obj.open(FileName, ios::out | ios::app);
+	Obj << endl;
 	int size = int(AccountData.size());
 	string NewAcc = AccountData[size - 1].username + '|' + AccountData[size - 1].password;
-	Obj << NewAcc << endl;
+	Obj << NewAcc;
 	Obj.close();
 }
 
@@ -148,7 +149,7 @@ void ServerManager::MainProcess() {
 			}
 		}
 		/*Xử lý yêu cầu đăng ký từ client*/
-		else if (strcmp(temp1, "REGISTER")) {
+		else if (strcmp(temp1, "REGISTER") == 0) {
 			delete[] temp1;
 			Connector.Receive(&len, 4, 0);
 			char* temp2 = new char[len + 1];
@@ -160,6 +161,7 @@ void ServerManager::MainProcess() {
 			string mess[] = { "error","ok" };
 			//Đăng ký thành công, tài khoản mới được ghi xuống file ACCOUNT.txt
 			if (CheckRegister) {
+				AccountData.push_back({ tokens[0],tokens[1] });
 				WriteAccountDataToFile("ACCOUNT.txt");
 				len = mess[1].length();
 				Connector.Send(&len, sizeof(int), 0);
