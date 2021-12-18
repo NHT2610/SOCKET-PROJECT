@@ -215,8 +215,11 @@
     <None Include="res\Client.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\Server\Server\res\gold_coin_stacks.ico" />
     <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\bitmap3.bmp" />
     <Image Include="res\Client.ico" />
+    <Image Include="res\gold_coin_stacks.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include "ServerDlg.h"
+#include <WebServices.h>
 
 class CServerDlg;
 using namespace std;

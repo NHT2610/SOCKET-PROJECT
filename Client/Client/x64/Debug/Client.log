@@ -1,9 +1,1 @@
-﻿  ClientDlg.cpp
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientDlg.cpp(85,2): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientDlg.cpp(85,2): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientDlg.cpp(86,2): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientDlg.cpp(86,2): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientDlg.cpp(94,3): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientDlg.cpp(94,3): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
-  LINK : D:\D? AN SOCKET\Client\x64\Debug\Client.exe not found or not built by the last incremental link; performing full link
-  Client.vcxproj -> D:\ĐỒ ÁN SOCKET\Client\x64\Debug\Client.exe
+﻿  Client.vcxproj -> D:\ĐỒ ÁN SOCKET\Client\x64\Debug\Client.exe

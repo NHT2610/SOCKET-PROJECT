@@ -12,6 +12,8 @@
 #define IDD_DIALOG2                     132
 #define IDD_DIALOG3                     134
 #define IDB_BITMAP1                     136
+#define IDB_BITMAP3                     139
+#define IDI_ICON1                       141
 #define IP_SERVER                       1000
 #define CONNECT_BUUTON                  1001
 #define USERNAME                        1002
@@ -36,9 +38,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        137
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1020
+#define _APS_NEXT_CONTROL_VALUE         1021
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

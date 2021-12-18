@@ -18,7 +18,7 @@ MainDialog::MainDialog(CWnd* pParent /*=nullptr*/)
 #ifndef _WIN32_WCE
 	EnableActiveAccessibility();
 #endif
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_ICON1);
 }
 
 MainDialog::~MainDialog()
@@ -112,7 +112,7 @@ void MainDialog::OnPaint()
 
 		//Snippet 03: Load Image to Memory
 		memoryDC.CreateCompatibleDC(&DialogDC);
-		tiledImage.LoadBitmap(IDB_BITMAP1);
+		tiledImage.LoadBitmap(IDB_BITMAP3);
 		memoryDC.SelectObject(&tiledImage);
 
 		//Snippet 04: Copy memory pixels to dialog surface

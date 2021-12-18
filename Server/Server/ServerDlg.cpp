@@ -55,7 +55,7 @@ CServerDlg::CServerDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_SERVER_DIALOG, pParent),
 	m_pServerSock(NULL)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_ICON1);
 }
 
 void CServerDlg::DoDataExchange(CDataExchange* pDX)
@@ -106,7 +106,9 @@ BOOL CServerDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
-
+	HICON hIcon = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_ICON1));
+	SetIcon(hIcon, TRUE);
+	SetIcon(hIcon, FALSE);
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 

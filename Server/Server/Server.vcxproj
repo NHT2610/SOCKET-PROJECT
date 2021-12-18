@@ -209,7 +209,9 @@
     <None Include="res\Server.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="C:\Users\ADMIN\Downloads\gold_coin_stacks.ico" />
     <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\gold_coin_stacks.ico" />
     <Image Include="res\Server.ico" />
   </ItemGroup>
   <ItemGroup>

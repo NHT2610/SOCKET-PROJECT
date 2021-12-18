@@ -74,7 +74,8 @@ BOOL SignUp::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
-
+	HICON hIcon = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_ICON1));
+	SetIcon(hIcon, FALSE);
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 

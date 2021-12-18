@@ -68,6 +68,12 @@
     <Image Include="res\bitmap1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="C:\Users\ADMIN\Downloads\gold_coin_stacks.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\gold_coin_stacks.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ACCOUNT.txt" />

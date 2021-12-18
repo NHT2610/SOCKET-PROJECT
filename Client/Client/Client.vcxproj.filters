@@ -86,5 +86,14 @@
     <Image Include="res\bitmap1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\bitmap3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\Server\Server\res\gold_coin_stacks.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\gold_coin_stacks.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

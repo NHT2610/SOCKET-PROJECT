@@ -54,7 +54,7 @@ END_MESSAGE_MAP()
 CClientDlg::CClientDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_CLIENT_DIALOG, pParent)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_ICON1);
 }
 
 void CClientDlg::DoDataExchange(CDataExchange* pDX)
@@ -105,7 +105,8 @@ BOOL CClientDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
-
+	HICON hIcon = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_ICON1));
+	SetIcon(hIcon, FALSE);
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
