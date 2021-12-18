@@ -228,7 +228,14 @@ void CClientDlg::OnBnClickedBuuton()
 void CClientDlg::OnBnClickedExit1()
 {
 	// TODO: Add your control notification handler code here
-	client_socket.SendMessage(_T("QUIT"));
-	client_socket.close();
-	exit(1);
+	client_socket.SendMessageW(_T("QUIT"));
+	int select = MessageBox(L"Ban co muon thoat?", L"Question", MB_YESNO | MB_ICONQUESTION);
+	if (select == IDYES) {
+		client_socket.SendMessageW(_T("YES"));
+		client_socket.close();
+		exit(1);
+	}
+	else if (select == IDNO) {
+		client_socket.SendMessageW(_T("NO"));
+	}
 }

@@ -194,12 +194,10 @@ void CServerDlg::OnBnClickedStart()
 		MessageBox(L"Khoi tao server THAT BAI!", L"Information", MB_OK | MB_ICONINFORMATION);
 		exit(1);
 	}
-	ShowServerInfo("DANG DOI KET NOI ....");
-	ShowServerInfo("\n");
+	ShowServerInfo("DANG DOI KET NOI ....\r\n");
 	m_pServerSock->ServerListen();
 	if (m_pServerSock->ServerAccept()) {
-		ShowServerInfo(">>> Client da ket noi");
-		ShowServerInfo("\n");
+		ShowServerInfo(">>> Client da ket noi\r\n");
 		m_pServerSock->MainProcess();
 	}
 }
