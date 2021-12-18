@@ -1,7 +1,8 @@
 ﻿#include "pch.h"
 #include "ServerManager.h"
 
-ServerManager::ServerManager() {
+ServerManager::ServerManager(CServerDlg* dialog) {
+	DlgTextBox = dialog;
 	GetAccountDataFromFile("ACCOUNT.txt");
 }
 
@@ -117,6 +118,7 @@ void ServerManager::MainProcess() {
 
 		/*Xử lý yêu cầu đăng nhập từ client*/
 		if (strcmp(temp1, "LOGIN") == 0) {
+			DlgTextBox->ShowServerInfo(">>> Client dang nhap\n");
 			delete[] temp1;
 			//Nhận thông điệp về độ dài chuỗi tin nhắn từ client
 			Connector.Receive(&len, 4, 0);
@@ -131,18 +133,21 @@ void ServerManager::MainProcess() {
 			int CheckLogin = CheckUsernameAndPasswordLOGIN(tokens[0], tokens[1]);
 			//Lỗi nhập sai mật khẩu 
 			if (CheckLogin == 1) {
+				DlgTextBox->ShowServerInfo("<<< Client da nhap sai mat khau!\n");
 				len = mess[1].length();
 				Connector.Send(&len, sizeof(int), 0);
 				Connector.Send(mess[1].c_str(), len, 0);
 			}
 			//Lỗi tài khoản không tồn tại
 			else if (CheckLogin == 2) {
+				DlgTextBox->ShowServerInfo("\n<<< Client dang nhap tai khoan chua dang ky!\n");
 				len = mess[0].length();
 				Connector.Send(&len, sizeof(int), 0);
 				Connector.Send(mess[0].c_str(), len, 0);
 			}
 			//Đăng nhập thành công
 			else {
+				DlgTextBox->ShowServerInfo("<<< Client dang nhap thanh cong\n");
 				len = mess[2].length();
 				Connector.Send(&len, sizeof(int), 0);
 				Connector.Send(mess[2].c_str(), len, 0);
@@ -150,6 +155,7 @@ void ServerManager::MainProcess() {
 		}
 		/*Xử lý yêu cầu đăng ký từ client*/
 		else if (strcmp(temp1, "REGISTER") == 0) {
+			DlgTextBox->ShowServerInfo(">>> Client dang ky tai khoan\n");
 			delete[] temp1;
 			Connector.Receive(&len, 4, 0);
 			char* temp2 = new char[len + 1];
@@ -161,6 +167,8 @@ void ServerManager::MainProcess() {
 			string mess[] = { "error","ok" };
 			//Đăng ký thành công, tài khoản mới được ghi xuống file ACCOUNT.txt
 			if (CheckRegister) {
+				puts("<<< Client dang ky tai khoan thanh cong!");
+				DlgTextBox->ShowServerInfo("<<< Client dang ky tai khoan thanh cong!\n");
 				AccountData.push_back({ tokens[0],tokens[1] });
 				WriteAccountDataToFile("ACCOUNT.txt");
 				len = mess[1].length();
@@ -169,6 +177,7 @@ void ServerManager::MainProcess() {
 			}
 			//Đăng ký thất bại
 			else {
+				DlgTextBox->ShowServerInfo("<<< Client dang ky tai khoan that bai!\n");
 				len = mess[0].length();
 				Connector.Send(&len, sizeof(int), 0);
 				Connector.Send(mess[0].c_str(), len, 0);
@@ -176,22 +185,27 @@ void ServerManager::MainProcess() {
 		}
 		/*Xử lý yêu cầu lấy thông tin tỷ giá vàng từ client*/
 		else if (strcmp(temp1, "GET_INFORMATION") == 0) {
+			DlgTextBox->ShowServerInfo(">>> Client yeu cau thong tin ty gia vang\n");
+			delete[] temp1;
 			//CODE HERE
 		}
 		//Xử lý yêu cầu thoát từ client
 		else if (strcmp(temp1, "QUIT") == 0) {
+			DlgTextBox->ShowServerInfo(">>> Client yeu cau thoat\n");
 			delete[] temp1;
 			Connector.Receive(&len, 4, 0);
 			char* temp2 = new char[len + 1];
 			Connector.Receive(temp2, len, 0); temp2[len] = '\0';
 			if (strcmp(temp2, "YES")) {//Client đồng ý thoát
+				DlgTextBox->ShowServerInfo(">>> Client da thoat!\n");
 				delete[] temp2;
 				Connector.Close();
+				break;
 			}
 			else {//Client không thoát
+				DlgTextBox->ShowServerInfo(">>> Client da huy thoat!\n");
 				delete[] temp2;
 			}
-			
 		}
 	}
 }

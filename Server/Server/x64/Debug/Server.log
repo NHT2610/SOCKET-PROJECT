@@ -1,7 +1,17 @@
-﻿  ServerManager.cpp
-D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(134,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(140,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(146,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(166,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(172,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+﻿  ServerDlg.cpp
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(86,2): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(86,2): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(87,2): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(87,2): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(95,3): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(95,3): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(192,18): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(192,18): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+  ServerManager.cpp
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(137,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(144,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(151,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(174,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(181,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
   Server.vcxproj -> D:\ĐỒ ÁN SOCKET\Server\x64\Debug\Server.exe

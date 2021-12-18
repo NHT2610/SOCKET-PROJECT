@@ -144,6 +144,7 @@ void MainDialog::OnBnClickedButton1()
 	if (select == IDYES) {
 		client_socket.SendMessageW(_T("YES"));
 		client_socket.close();
+		exit(1);
 	}
 	else if (select == IDNO) {
 		client_socket.SendMessageW(_T("NO"));

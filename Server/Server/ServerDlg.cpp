@@ -7,9 +7,7 @@
 #include "Server.h"
 #include "ServerDlg.h"
 #include "afxdialogex.h"
-#include "ServerManager.h"
 
-ServerManager ServerSock;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -54,7 +52,8 @@ END_MESSAGE_MAP()
 
 
 CServerDlg::CServerDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_SERVER_DIALOG, pParent)
+	: CDialogEx(IDD_SERVER_DIALOG, pParent),
+	m_pServerSock(NULL)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -62,14 +61,16 @@ CServerDlg::CServerDlg(CWnd* pParent /*=nullptr*/)
 void CServerDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, SERVERINFO, ServerActivity);
 }
 
 BEGIN_MESSAGE_MAP(CServerDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(STOP, &CServerDlg::OnBnClickedStop)
+	ON_BN_CLICKED(DISCONNECT, &CServerDlg::OnBnClickedStop)
 	ON_BN_CLICKED(START, &CServerDlg::OnBnClickedStart)
+	ON_BN_CLICKED(STOPSERVER, &CServerDlg::OnBnClickedStopserver)
 END_MESSAGE_MAP()
 
 
@@ -179,21 +180,48 @@ HCURSOR CServerDlg::OnQueryDragIcon()
 void CServerDlg::OnBnClickedStop()
 {
 	// TODO: Add your control notification handler code here
-	ServerSock.ServerSend("DISCONNECT");
-	ServerSock.ServerClose();
-	exit(1);
+	m_pServerSock->ServerSend("DISCONNECT");
+	ShowServerInfo("<<< Server da ngung ket noi cua Client");
+	m_pServerSock->ConnectorClose();
 }
 
 //Khởi tạo kết nối, cho phép client kết nối đến server
 void CServerDlg::OnBnClickedStart()
 {
 	// TODO: Add your control notification handler code here
-	if (!ServerSock.ServerCreate(12345)) {
+	m_pServerSock = new ServerManager(this);
+	if (!m_pServerSock->ServerCreate(12345)) {
 		MessageBox(L"Khoi tao server THAT BAI!", L"Information", MB_OK | MB_ICONINFORMATION);
 		exit(1);
 	}
-	ServerSock.ServerListen();
-	if (ServerSock.ServerAccept()) {
-		ServerSock.MainProcess();
+	ShowServerInfo("DANG DOI KET NOI ....");
+	ShowServerInfo("\n");
+	m_pServerSock->ServerListen();
+	if (m_pServerSock->ServerAccept()) {
+		ShowServerInfo(">>> Client da ket noi");
+		ShowServerInfo("\n");
+		m_pServerSock->MainProcess();
 	}
+}
+
+
+void CServerDlg::AppendTextToEditCtrl(CEdit& edit, LPCTSTR pszText) {
+	int nLength = edit.GetWindowTextLength();
+	edit.SetSel(nLength, nLength);
+	edit.ReplaceSel(pszText);
+}
+
+//Hiển thị các hoạt động ra hộp Server Info
+void CServerDlg::ShowServerInfo(string sValue) {
+	CString strLine(sValue.c_str());
+	AppendTextToEditCtrl(ServerActivity, strLine);
+}
+
+void CServerDlg::OnBnClickedStopserver()
+{
+	// TODO: Add your control notification handler code here
+	puts("<<< Server STOP!");
+	ShowServerInfo("<<< Server STOP!");
+	m_pServerSock->ServerClose();
+	exit(1);
 }

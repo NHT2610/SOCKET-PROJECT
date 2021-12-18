@@ -3,7 +3,9 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include "ServerDlg.h"
 
+class CServerDlg;
 using namespace std;
 
 class ServerManager
@@ -24,7 +26,7 @@ private:
 	bool CheckUsernameAndPasswordREGISTER(string& user);
 	void WriteAccountDataToFile(const char* FileName);
 public:
-	ServerManager();
+	ServerManager(CServerDlg* dialog);
 	~ServerManager();
 
 	bool ServerCreate(int PORT);
@@ -34,6 +36,6 @@ public:
 	bool ServerAccept();
 	void ServerSend(string mess);
 	void MainProcess();
+	CServerDlg* DlgTextBox;
 };
 
-extern ServerManager ServerSock;
