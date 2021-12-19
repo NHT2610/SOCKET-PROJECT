@@ -5,6 +5,8 @@
 #include <fstream>
 #include "ServerDlg.h"
 #include <WebServices.h>
+#include <windows.data.json.h>
+#include <sql.h>
 
 class CServerDlg;
 using namespace std;
