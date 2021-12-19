@@ -7,6 +7,7 @@
 #include <WebServices.h>
 #include <windows.data.json.h>
 #include <sql.h>
+#include <thread>
 
 class CServerDlg;
 using namespace std;
