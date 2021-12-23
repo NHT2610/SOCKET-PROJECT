@@ -13,8 +13,9 @@ ClientSocket::~ClientSocket() {
 	char* temp = new char[len + 1];
 	memset(temp, 0, len + 1);
 	wcstombs(temp, mess, len + 1);
+	soc.Send(temp, len, 0);
 	delete[] temp;
-	soc.Send(mess, len, 0);
+	soc.Close();
 	soc.~CSocket();
 }
 

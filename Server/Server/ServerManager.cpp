@@ -250,6 +250,7 @@ void ServerManager::MainProcess() {
 		}
 		else if (strcmp(temp1, "DISCONNECTED") == 0) {
 			delete[] temp1;
+			DlgTextBox->ShowServerInfo(">>> Client bi mat ket noi!\r\n");
 			break;
 		}
 	}

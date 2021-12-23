@@ -1,1 +1,9 @@
-﻿  Client.vcxproj -> D:\ĐỒ ÁN SOCKET\Client\x64\Debug\Client.exe
+﻿  ClientSocket.cpp
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(48,23): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(62,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(74,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(80,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(97,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(109,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(115,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Client.vcxproj -> D:\ĐỒ ÁN SOCKET\Client\x64\Debug\Client.exe
