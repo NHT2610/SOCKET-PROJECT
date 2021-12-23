@@ -1,4 +1,5 @@
-﻿  Server.cpp
+﻿  pch.cpp
+  Server.cpp
 D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(66,33): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
 D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(66,33): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
 D:\ĐỒ ÁN SOCKET\Server\Server\Server.cpp(95,3): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
@@ -14,5 +15,11 @@ D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(95,3): warning C4566: character 
 D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(95,3): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
 D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(194,18): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
 D:\ĐỒ ÁN SOCKET\Server\Server\ServerDlg.cpp(194,18): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+  ServerManager.cpp
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(137,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(144,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(151,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(174,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Server\Server\ServerManager.cpp(181,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   Generating Code...
   Server.vcxproj -> D:\ĐỒ ÁN SOCKET\Server\x64\Debug\Server.exe

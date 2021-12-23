@@ -27,12 +27,16 @@
 #define IDC_RADIO1                      1011
 #define IDC_RADIO2                      1012
 #define IDC_DATETIMEPICKER1             1013
+#define DATE                            1013
 #define IDC_COMBO1                      1014
+#define GOLD_TYPE                       1014
 #define IDC_EDIT1                       1015
 #define IDC_LIST1                       1016
+#define GOLD_LIST                       1016
 #define IDC_BUTTON1                     1017
 #define EXIT1                           1018
 #define IDC_BUTTON2                     1019
+#define SEARCH                          1019
 #define IDC_MFCPROPERTYGRID1            1021
 
 // Next default values for new objects

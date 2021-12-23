@@ -191,16 +191,24 @@ void CServerDlg::OnBnClickedStop()
 void CServerDlg::OnBnClickedStart()
 {
 	// TODO: Add your control notification handler code here
+	//Khởi tạo server
 	m_pServerSock = new ServerManager(this);
 	if (!m_pServerSock->ServerCreate(12345)) {
-		MessageBox(L"Khoi tao server THAT BAI!", L"Information", MB_OK | MB_ICONINFORMATION);
+		MessageBox(L"Khởi tạo server THẤT BẠI!", L"Information", MB_OK | MB_ICONINFORMATION);
 		exit(1);
 	}
 	ShowServerInfo("DANG DOI KET NOI ....\r\n");
 	m_pServerSock->ServerListen();
-	if (m_pServerSock->ServerAccept()) {
-		ShowServerInfo(">>> Client da ket noi\r\n");
-		m_pServerSock->MainProcess();
+	try
+	{
+		if (m_pServerSock->ServerAccept()) {
+			ShowServerInfo(">>> Client da ket noi\r\n");
+			m_pServerSock->MainProcess();
+		}
+	}
+	catch (const std::exception&)
+	{
+		MessageBox(L"Client mat ket noi!", L"Information", MB_OK | MB_ICONINFORMATION);
 	}
 }
 

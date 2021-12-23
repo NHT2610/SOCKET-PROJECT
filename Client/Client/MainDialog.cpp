@@ -6,14 +6,16 @@
 #include "afxdialogex.h"
 #include "MainDialog.h"
 #include "ClientSocket.h"
+#include <string>
 
-
+using namespace std;
 // MainDialog dialog
 
 IMPLEMENT_DYNAMIC(MainDialog, CDialogEx)
 
 MainDialog::MainDialog(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG3, pParent)
+	, DateString(COleDateTime::GetCurrentTime())
 {
 #ifndef _WIN32_WCE
 	EnableActiveAccessibility();
@@ -28,6 +30,10 @@ MainDialog::~MainDialog()
 void MainDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, GOLD_LIST, GoldInfo);
+	DDX_Control(pDX, DATE, SearchDate);
+	DDX_Control(pDX, GOLD_TYPE, Type);
+	DDX_DateTimeCtrl(pDX, DATE, DateString);
 }
 
 
@@ -35,8 +41,8 @@ BEGIN_MESSAGE_MAP(MainDialog, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATETIMEPICKER1, &MainDialog::OnDtnDatetimechangeDatetimepicker1)
 	ON_BN_CLICKED(IDC_BUTTON1, &MainDialog::OnBnClickedButton1)
+	ON_BN_CLICKED(SEARCH, &MainDialog::OnBnClickedSearch)
 END_MESSAGE_MAP()
 
 
@@ -72,6 +78,21 @@ BOOL MainDialog::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
+	HICON hIcon = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDI_ICON1));
+	SetIcon(hIcon, FALSE);
+
+	//Cài đặc combo box cho phần loại vàng
+	Type.AddString(_T("DEFAULT"));
+	Type.AddString(_T("DOJI"));
+	Type.AddString(_T("SJC"));
+	Type.SetCurSel(0);
+
+	//Cài đặt bảng hiển thị giá vàng
+	GoldInfo.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+	GoldInfo.InsertColumn(0, _T("Loại vàng"), LVCFMT_LEFT, 400);
+	GoldInfo.InsertColumn(1, _T("Giá mua (đơn vị: 1000đ)"), LVCFMT_LEFT, 300);
+	GoldInfo.InsertColumn(2, _T("Giá bán (đơn vị: 1000đ)"), LVCFMT_LEFT, 300);
+	GoldInfo.InsertColumn(3, _T("Ngày"), LVCFMT_LEFT, 400);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -128,14 +149,6 @@ HCURSOR MainDialog::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void MainDialog::OnDtnDatetimechangeDatetimepicker1(NMHDR* pNMHDR, LRESULT* pResult)
-{
-	LPNMDATETIMECHANGE pDTChange = reinterpret_cast<LPNMDATETIMECHANGE>(pNMHDR);
-	// TODO: Add your control notification handler code here
-	*pResult = 0;
-}
-
-
 void MainDialog::OnBnClickedButton1()
 {
 	// TODO: Add your control notification handler code here
@@ -149,4 +162,49 @@ void MainDialog::OnBnClickedButton1()
 	else if (select == IDNO) {
 		client_socket.SendMessageW(_T("NO"));
 	}
+}
+
+//Search thông tin tỷ giá vàng
+void MainDialog::OnBnClickedSearch()
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(TRUE);
+	//Lấy thông tin ngày tháng năm
+	int Day = DateString.GetDay();
+	int Month = DateString.GetMonth();
+	int Year = DateString.GetYear();
+	string d, m, y;
+	string SearchDay;
+	if (Day < 10) { d += "0" + to_string(Day); }
+	else { d = to_string(Day); }
+	if (Month < 10) { m += "0" + to_string(Month); }
+	else { m = to_string(Month); }
+	y = to_string(Year);
+	SearchDay += d + m + y;
+	//Lấy thông tin của loại vàng
+	CString gold_t;
+	int index = Type.GetCurSel();
+	Type.GetLBText(index, gold_t);
+	string SearchType = CStringA(gold_t);
+
+	//Chuỗi yêu cầu được gửi đi gồm (ngày tháng năm) + loại vàng
+	string mess = SearchDay + "|" + SearchType;
+	
+	//Gửi request giá vàng đến server
+	client_socket.SendMessageW(_T("GET_INFORMATION"));
+	vector<ClientSocket::GoldInformations> DataRecv = client_socket.GetDataFromServer(mess);
+
+	//In data nhận được ra bảng
+	int size = int(DataRecv.size());
+	for (int i = 0; i < size; ++i) {
+		CString field1(DataRecv[i].LoaiVang.c_str());
+		GoldInfo.InsertItem(i, field1);
+		CString field2(DataRecv[i].GiaMua.c_str());
+		GoldInfo.SetItemText(i, 1, field2);
+		CString field3(DataRecv[i].GiaBan.c_str());
+		GoldInfo.SetItemText(i, 2, field3);
+		CString field4(DataRecv[i].Ngay.c_str());
+		GoldInfo.SetItemText(i, 3, field4);
+	}
+	UpdateData(FALSE);
 }

@@ -167,7 +167,6 @@ void ServerManager::MainProcess() {
 			string mess[] = { "error","ok" };
 			//Đăng ký thành công, tài khoản mới được ghi xuống file ACCOUNT.txt
 			if (CheckRegister) {
-				puts("<<< Client dang ky tai khoan thanh cong!");
 				DlgTextBox->ShowServerInfo("<<< Client dang ky tai khoan thanh cong!\r\n");
 				AccountData.push_back({ tokens[0],tokens[1] });
 				WriteAccountDataToFile("ACCOUNT.txt");
@@ -185,9 +184,52 @@ void ServerManager::MainProcess() {
 		}
 		/*Xử lý yêu cầu lấy thông tin tỷ giá vàng từ client*/
 		else if (strcmp(temp1, "GET_INFORMATION") == 0) {
-			DlgTextBox->ShowServerInfo(">>> Client yeu cau thong tin ty gia vang\r\n");
 			delete[] temp1;
 			//CODE HERE
+			//Client yêu cầu giá vàng của ngày/tháng/năm + loại vàng
+			Connector.Receive(&len, 4, 0);
+			char* temp2 = new char[len + 1];
+			Connector.Receive(temp2, len, 0); temp2[len] = '\0';
+			//Tách chuỗi ddmmyy và loại vàng
+			vector<string> tokens = split_string(temp2, '|');
+			delete[] temp2;
+			if (strcmp(tokens[1].c_str(), "DEFAULT") == 0) {
+				DlgTextBox->ShowServerInfo(">>> Client yeu cau thong tin ty gia vang "
+					+ tokens[0] + "\r\n");
+				string TempFileName = "DataBase\\" + tokens[0] + ".txt";
+				const char* FileName = TempFileName.c_str();
+				//Load dữ liệu mặc định của ngày yêu cầu lên server
+				wstring s = ReadDataFile(FileName);
+				GoldData.clear();
+				GoldData = GetData(s, L'|');
+				SendGoldData();
+			}
+			else if (strcmp(tokens[1].c_str(), "DOJI") == 0) {
+				DlgTextBox->ShowServerInfo(">>> Client yeu cau thong tin ty gia vang "
+					+ tokens[1] + " " + tokens[0] + "\r\n");
+				string TempFileName = "DataBase\\" + tokens[0] + ".txt";
+				const char* FileName = TempFileName.c_str();
+				//Load dữ liệu mặc định của ngày yêu cầu lên server
+				wstring s = ReadDataFile(FileName);
+				wstring_convert<codecvt_utf8<wchar_t>, wchar_t> converter;
+				wstring Type = converter.from_bytes(tokens[1]);
+				GoldData.clear();
+				GoldData = GetDataByTypeGold(s, Type);
+				SendGoldData();
+			}
+			else if (strcmp(tokens[1].c_str(), "SJC") == 0) {
+				DlgTextBox->ShowServerInfo(">>> Client yeu cau thong tin ty gia vang "
+					+ tokens[1] + " " + tokens[0] + "\r\n");
+				string TempFileName = "DataBase\\" + tokens[0] + ".txt";
+				const char* FileName = TempFileName.c_str();
+				//Load dữ liệu mặc định của ngày yêu cầu lên server
+				wstring s = ReadDataFile(FileName);
+				wstring_convert<codecvt_utf8<wchar_t>, wchar_t> converter;
+				wstring Type = converter.from_bytes(tokens[1]);
+				GoldData.clear();
+				GoldData = GetDataByTypeGold(s, Type);
+				SendGoldData();
+			}
 		}
 		//Xử lý yêu cầu thoát từ client
 		else if (strcmp(temp1, "QUIT") == 0) {
@@ -199,7 +241,6 @@ void ServerManager::MainProcess() {
 			if (strcmp(temp2, "YES") == 0) {//Client đồng ý thoát
 				DlgTextBox->ShowServerInfo(">>> Client da thoat!\r\n");
 				delete[] temp2;
-				Connector.Close();
 				break;
 			}
 			else {//Client không thoát
@@ -207,5 +248,131 @@ void ServerManager::MainProcess() {
 				delete[] temp2;
 			}
 		}
+		else if (strcmp(temp1, "DISCONNECTED") == 0) {
+			delete[] temp1;
+			break;
+		}
 	}
+	Connector.Close();
+}
+
+//Lấy ngày, tháng, năm của ngày hôm nay
+void ServerManager::CurrentDay(int& day, int& month, int& year) {
+	time_t now = time(0);
+	tm ltm;
+	localtime_s(&ltm, &now);
+	day = ltm.tm_mday;
+	month = ltm.tm_mon + 1;
+	year = ltm.tm_year + 1900;
+}
+
+//Đọc dữ liệu từ file
+wstring ServerManager::ReadDataFile(const char* FileName) {
+	_setmode(_fileno(stdin), _O_U16TEXT);
+	_setmode(_fileno(stdout), _O_U16TEXT);
+	wifstream wif(FileName);
+	wif.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t>));
+	wstringstream wss;
+	wss << wif.rdbuf();
+	return wss.str();
+}
+
+//Lấy dữ liệu từ file đưa vào vector
+vector<ServerManager::GoldInformations> ServerManager::GetData(wstring s, wchar_t ch) {
+	vector<GoldInformations> DataResult;
+	wstring ngay, loai, mua, ban;
+	wstring field;
+	int FieldCount = 1;
+	int size = int(s.length());
+	for (int i = 0; i < size; ++i) {
+		int j = i;
+		while (j < size) {
+			if (FieldCount == 5) {
+				DataResult.push_back({ ngay,loai,mua,ban });
+				ngay = L""; loai = L""; mua = L""; ban = L"";
+				FieldCount = 1;
+				break;
+			}
+			if (s[j] == ch) {
+				switch (FieldCount)
+				{
+				case 1: ngay = field; break;
+				case 2: loai = field; break;
+				case 3: mua = field; break;
+				default: ban = field;
+				}
+				++j;
+				++FieldCount;
+				field = L"";
+				continue;
+			}
+			field += s[j];
+			++j;
+		}
+		i = j;
+	}
+	return DataResult;
+}
+
+//Hàm lấy dữ liệu có ràng buộc ngày và loại vàng
+vector<ServerManager::GoldInformations> ServerManager::GetDataByTypeGold
+(wstring s, wstring Type)
+{
+	vector<GoldInformations> DataResult;
+	wstring ngay, loai, mua, ban;
+	wstring field;
+	wstring_convert<codecvt_utf8<wchar_t>, wchar_t> converter;
+	int FieldCount = 1;
+	int size = int(s.length());
+	for (int i = 0; i < size; ++i) {
+		int j = i;
+		while (j < size) {
+			if (FieldCount == 5) {
+				string a = converter.to_bytes(loai);
+				string b = converter.to_bytes(Type);
+				if (strstr(a.c_str(),b.c_str())) {
+					DataResult.push_back({ ngay,loai,mua,ban });
+				}
+				ngay = L""; loai = L""; mua = L""; ban = L"";
+				FieldCount = 1;
+				break;
+			}
+			if (s[j] == L'|') {
+				switch (FieldCount)
+				{
+				case 1: ngay = field; break;
+				case 2: loai = field; break;
+				case 3: mua = field; break;
+				default: ban = field;
+				}
+				++j;
+				++FieldCount;
+				field = L"";
+				continue;
+			}
+			field += s[j];
+			++j;
+		}
+		i = j;
+	}
+	return DataResult;
+}
+
+//Hàm gửi dữ liệu giá vàng từ server
+void ServerManager::SendGoldData() {
+	int size = int(GoldData.size());
+	int len = 0;
+	wstring_convert<codecvt_utf8<wchar_t>, wchar_t> converter;
+	for (int i = 0; i < size; ++i) {
+		wstring Field = GoldData[i].LoaiVang + L"#" + GoldData[i].GiaMua + L"#"
+			+ GoldData[i].GiaBan + L"#" + GoldData[i].Date;
+		string message = converter.to_bytes(Field);
+		len = int(message.length());
+		Connector.Send(&len, sizeof(int), 0);
+		Connector.Send(message.c_str(), len, 0);
+	}
+	string last = "END";
+	len = int(last.length());
+	Connector.Send(&len, sizeof(int), 0);
+	Connector.Send(last.c_str(), len, 0);
 }

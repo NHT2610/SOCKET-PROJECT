@@ -21,7 +21,7 @@ SignUp::SignUp(CWnd* pParent /*=nullptr*/)
 #ifndef _WIN32_WCE
 	EnableActiveAccessibility();
 #endif
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_ICON1);
 }
 
 SignUp::~SignUp()
