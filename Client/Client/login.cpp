@@ -139,7 +139,7 @@ int Login::checkPassword(CString& pass) {
 	if (!len) { return 1; }
 	int i = 0;
 	while (i < len) {
-		if (pass[i] == ' ') { return 2; }
+		if (pass[i] == ' ' || pass[i] == '|') { return 2; }
 		++i;
 	}
 	return 0;
@@ -152,24 +152,24 @@ void Login::OnBnClickedLogin()
 	GetDlgItemText(USERNAME, username);
 	GetDlgItemText(PASSWORD, password);
 	if (checkUsername(username) == 1) {
-		MessageBox(L"Ban CHUA dien Ten dang nhap!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Bạn CHƯA điền Tên đăng nhập!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	else if (checkUsername(username) == 2) {
-		MessageBox(L"Ten dang nhap KHONG duoc chua khoang trang hoac ky tu la!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Tên đăng nhập KHÔNG được chứa ký tự đặc biệt!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	if (checkPassword(password) == 1) {
-		MessageBox(L"Ban CHUA dien Mat khau!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Bạn CHƯA điền Mật khẩu!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	else if (checkPassword(password) == 2) {
-		MessageBox(L"Mat khau KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Mật khẩu KHÔNG được chưa khoảng trắng hoặc ký tự '|'!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	if (!checkUsername(username) && !checkPassword(password)) {
 		int check_login = client_socket.login(username, password, _T("LOGIN"));
 		if (check_login == 1) {
-			MessageBox(L"Ten dang nhap KHONG ton tai!", L"Error", MB_OK | MB_ICONERROR);
+			MessageBox(L"Tên đăng nhập KHÔNG tồn tại!", L"Error", MB_OK | MB_ICONERROR);
 		}
 		else if (check_login == 2) {
-			MessageBox(L"Mat khau KHONG dung!", L"Error", MB_OK | MB_ICONERROR);
+			MessageBox(L"Mật khẩu KHÔNG đúng!", L"Error", MB_OK | MB_ICONERROR);
 		}
 		else {
 			MainDialog main;

@@ -1,19 +1,19 @@
-﻿  pch.cpp
-  Client.cpp
+﻿  Client.cpp
   ClientDlg.cpp
   ClientSocket.cpp
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(41,23): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(55,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(67,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(73,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(90,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(102,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(108,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(48,23): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(62,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(74,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(80,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(97,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(109,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(115,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   Login.cpp
   MainDialog.cpp
   SignUp.cpp
   Generating code
-  Previous IPDB not found, fall back to full compilation.
-  All 266 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  387 of 586 functions (66.0%) were compiled, the rest were copied from previous compilation.
+    321 functions were new in current compilation
+    26 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Client.vcxproj -> D:\ĐỒ ÁN SOCKET\Client\x64\Release\Client.exe

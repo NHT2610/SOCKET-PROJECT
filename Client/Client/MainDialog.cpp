@@ -194,17 +194,22 @@ void MainDialog::OnBnClickedSearch()
 	client_socket.SendMessageW(_T("GET_INFORMATION"));
 	vector<ClientSocket::GoldInformations> DataRecv = client_socket.GetDataFromServer(mess);
 
-	//In data nhận được ra bảng
-	int size = int(DataRecv.size());
-	for (int i = 0; i < size; ++i) {
-		CString field1(DataRecv[i].LoaiVang.c_str());
-		GoldInfo.InsertItem(i, field1);
-		CString field2(DataRecv[i].GiaMua.c_str());
-		GoldInfo.SetItemText(i, 1, field2);
-		CString field3(DataRecv[i].GiaBan.c_str());
-		GoldInfo.SetItemText(i, 2, field3);
-		CString field4(DataRecv[i].Ngay.c_str());
-		GoldInfo.SetItemText(i, 3, field4);
+	if (DataRecv.empty()) {
+		MessageBox(L"Không có dữ liệu ngày bạn yêu cầu!", L"Information", MB_OK | MB_ICONINFORMATION);
+	}
+	else {
+		//In data nhận được ra bảng
+		int size = int(DataRecv.size());
+		for (int i = 0; i < size; ++i) {
+			CString field1(DataRecv[i].LoaiVang.c_str());
+			GoldInfo.InsertItem(i, field1);
+			CString field2(DataRecv[i].GiaMua.c_str());
+			GoldInfo.SetItemText(i, 1, field2);
+			CString field3(DataRecv[i].GiaBan.c_str());
+			GoldInfo.SetItemText(i, 2, field3);
+			CString field4(DataRecv[i].Ngay.c_str());
+			GoldInfo.SetItemText(i, 3, field4);
+		}
 	}
 	UpdateData(FALSE);
 }

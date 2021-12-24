@@ -200,19 +200,19 @@ void CClientDlg::OnBnClickedBuuton()
 {
 	// TODO: Add your control notification handler code here
 	if (!client_socket.create()) {
-		MessageBox(L"Khoi tao socket KHONG thanh cong!", L"Warning", MB_OK | MB_ICONWARNING);
+		MessageBox(L"Khởi tạo socket KHÔNG thành công!", L"Warning", MB_OK | MB_ICONWARNING);
 	}
 	CString ipAddress = _T("");
 	GetDlgItem(IP_SERVER)->GetWindowTextW(ipAddress);
 	if (IP_server.IsBlank() || !checkIP(ipAddress)) {
-		int ID = MessageBox(L"Vui long kiem tra lai IP!", L"Error", MB_OK | MB_ICONERROR);
+		int ID = MessageBox(L"Vui lòng kiểm tra lại IP!", L"Error", MB_OK | MB_ICONERROR);
 		if (ID == IDOK) {
 			client_socket.close();
 		}
 	}
 	else {
 		if (!client_socket.connect(ipAddress, 12345)) {
-			int ID = MessageBox(L"Ket noi den server THAT BAI!", L"Infomation", MB_OK | MB_ICONINFORMATION);
+			int ID = MessageBox(L"Kết nối đến server THẤT BẠI!", L"Information", MB_OK | MB_ICONINFORMATION);
 			if (ID == IDOK) {
 				client_socket.close();
 			}
@@ -230,7 +230,7 @@ void CClientDlg::OnBnClickedExit1()
 {
 	// TODO: Add your control notification handler code here
 	client_socket.SendMessageW(_T("QUIT"));
-	int select = MessageBox(L"Ban co muon thoat?", L"Question", MB_YESNO | MB_ICONQUESTION);
+	int select = MessageBox(L"Bạn có muốn thoát?", L"Question", MB_YESNO | MB_ICONQUESTION);
 	if (select == IDYES) {
 		client_socket.SendMessageW(_T("YES"));
 		client_socket.close();

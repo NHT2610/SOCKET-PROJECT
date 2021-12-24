@@ -12,6 +12,7 @@
 #include <io.h>
 #include <locale>
 #include <codecvt>
+#pragma warning(disable : 4996)
 
 class CServerDlg;
 using namespace std;

@@ -207,7 +207,7 @@ void CServerDlg::OnBnClickedStart()
 			Server.Listen();
 			if (Server.Accept(Client)) {
 				m_pServerSock[count] = new ServerManager(this);
-				ShowServerInfo(">>>Client " + to_string(count) + " da ket noi\r\n");
+				ShowServerInfo(">>> Client " + to_string(count) + " da ket noi\r\n");
 				m_pServerSock[count]->hConnected = new SOCKET();
 				*m_pServerSock[count]->hConnected = Client.Detach();
 				m_pServerSock[count]->CountThread = count;
@@ -219,7 +219,7 @@ void CServerDlg::OnBnClickedStart()
 	}
 	catch (const std::exception&)
 	{
-		MessageBox(L"Client mat ket noi!", L"Information", MB_OK | MB_ICONINFORMATION);
+		MessageBox(L"Client mất kết nối!", L"Information", MB_OK | MB_ICONINFORMATION);
 	}
 	Server.Close();
 }

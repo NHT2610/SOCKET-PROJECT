@@ -158,29 +158,29 @@ void SignUp::OnBnClickedSignup2()
 	GetDlgItemText(PASSWORD_SIGNUP, SignupPassword);
 	GetDlgItemText(REPASSWORD, RePassword);
 	if (checkUsername(SignupUsername) == 1) {
-		MessageBox(L"Ban CHUA dien Ten dang nhap!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Bạn CHƯA điền Tên đăng nhập!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	else if (checkUsername(SignupUsername) == 2) {
-		MessageBox(L"Ten dang nhap KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Tên đăng nhập KHÔNG được chứa ký tự đặc biệt!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	if (checkPassword(SignupPassword) == 1) {
-		MessageBox(L"Ban CHUA dien Mat khau!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Bạn CHƯA điền Mật khẩu!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	else if (checkPassword(SignupPassword) == 2) {
-		MessageBox(L"Mat khau KHONG duoc chua khoang trang hoac ky tu '|'!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Mật khẩu KHÔNG được chứa khoảng trắng hoặc ký tự '|'!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	if (!checkRePass(SignupPassword, RePassword)) {
-		MessageBox(L"Mat khau nhap lai KHONG khop!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Mật khẩu nhập lại KHÔNG khớp!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	if (!checkUsername(SignupUsername) && !checkPassword(SignupPassword)
 		&& checkRePass(SignupPassword, RePassword))
 	{
 		int checkRegister = client_socket.Register(SignupUsername, SignupPassword, _T("REGISTER"));
 		if (checkRegister == 1) {
-			MessageBox(L"Ten dang nhap da ton tai!", L"Information", MB_OK | MB_ICONINFORMATION);
+			MessageBox(L"Tên đăng nhập đã tồn tại!", L"Information", MB_OK | MB_ICONINFORMATION);
 		}
 		else {
-			MessageBox(L"Dang ky THANH CONG!", L"Information", MB_OK | MB_ICONINFORMATION);
+			MessageBox(L"Đăng ký THÀNH CÔNG!", L"Information", MB_OK | MB_ICONINFORMATION);
 		}
 	}
 }

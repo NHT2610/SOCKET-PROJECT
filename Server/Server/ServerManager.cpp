@@ -208,40 +208,85 @@ void ServerManager::MainProcess() {
 			delete[] temp2;
 			if (strcmp(tokens[1].c_str(), "DEFAULT") == 0) {
 				DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread)
-					+ " yeu cau thong tin ty gia vang " + tokens[0] + "\r\n");
+					+ " yeu cau thong tin ty gia vang ngay " + tokens[0] + "\r\n");
 				string TempFileName = "DataBase\\" + tokens[0] + ".txt";
 				const char* FileName = TempFileName.c_str();
-				//Load dữ liệu mặc định của ngày yêu cầu lên server
-				wstring s = ReadDataFile(FileName);
-				GoldData.clear();
-				GoldData = GetData(s, L'|');
-				SendGoldData();
+				FILE* f = fopen(FileName, "r");
+				if (f == NULL) {
+					//Gửi tín hiệu để thông báo không có dữ liệu
+					string mess = "NO_INFORMATION";
+					len = int(mess.length());
+					Connector.Send(&len, sizeof(int), 0);
+					Connector.Send(mess.c_str(), len, 0);
+				}
+				else {
+					//Gửi tín hiệu thông báo có dữ liệu
+					string mess = "OK";
+					len = int(mess.length());
+					Connector.Send(&len, sizeof(int), 0);
+					Connector.Send(mess.c_str(), len, 0);
+					//Load dữ liệu mặc định của ngày yêu cầu lên server
+					wstring s = ReadDataFile(FileName);
+					GoldData.clear();
+					GoldData = GetData(s, L'|');
+					SendGoldData();
+				}
 			}
 			else if (strcmp(tokens[1].c_str(), "DOJI") == 0) {
 				DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread)
-					+ " yeu cau thong tin ty gia vang " + tokens[1] + " " + tokens[0] + "\r\n");
+					+ " yeu cau thong tin ty gia vang " + tokens[1] + " ngay " + tokens[0] + "\r\n");
 				string TempFileName = "DataBase\\" + tokens[0] + ".txt";
 				const char* FileName = TempFileName.c_str();
-				//Load dữ liệu mặc định của ngày yêu cầu lên server
-				wstring s = ReadDataFile(FileName);
-				wstring_convert<codecvt_utf8<wchar_t>, wchar_t> converter;
-				wstring Type = converter.from_bytes(tokens[1]);
-				GoldData.clear();
-				GoldData = GetDataByTypeGold(s, Type);
-				SendGoldData();
+				FILE* f = fopen(FileName, "r");
+				if (f == NULL) {
+					//Gửi tín hiệu để thông báo không có dữ liệu
+					string mess = "NO_INFORMATION";
+					len = int(mess.length());
+					Connector.Send(&len, sizeof(int), 0);
+					Connector.Send(mess.c_str(), len, 0);
+				}
+				else {
+					//Gửi tín hiệu thông báo có dữ liệu
+					string mess = "OK";
+					len = int(mess.length());
+					Connector.Send(&len, sizeof(int), 0);
+					Connector.Send(mess.c_str(), len, 0);
+					//Load dữ liệu mặc định của ngày yêu cầu lên server
+					wstring s = ReadDataFile(FileName);
+					wstring_convert<codecvt_utf8<wchar_t>, wchar_t> converter;
+					wstring Type = converter.from_bytes(tokens[1]);
+					GoldData.clear();
+					GoldData = GetDataByTypeGold(s, Type);
+					SendGoldData();
+				}
 			}
 			else if (strcmp(tokens[1].c_str(), "SJC") == 0) {
 				DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread)
-					+ " yeu cau thong tin ty gia vang " + tokens[1] + " " + tokens[0] + "\r\n");
+					+ " yeu cau thong tin ty gia vang " + tokens[1] + " ngay " + tokens[0] + "\r\n");
 				string TempFileName = "DataBase\\" + tokens[0] + ".txt";
 				const char* FileName = TempFileName.c_str();
-				//Load dữ liệu mặc định của ngày yêu cầu lên server
-				wstring s = ReadDataFile(FileName);
-				wstring_convert<codecvt_utf8<wchar_t>, wchar_t> converter;
-				wstring Type = converter.from_bytes(tokens[1]);
-				GoldData.clear();
-				GoldData = GetDataByTypeGold(s, Type);
-				SendGoldData();
+				FILE* f = fopen(FileName, "r");
+				if (f == NULL) {
+					//Gửi tín hiệu để thông báo không có dữ liệu
+					string mess = "NO_INFORMATION";
+					len = int(mess.length());
+					Connector.Send(&len, sizeof(int), 0);
+					Connector.Send(mess.c_str(), len, 0);
+				}
+				else {
+					//Gửi tín hiệu thông báo có dữ liệu
+					string mess = "OK";
+					len = int(mess.length());
+					Connector.Send(&len, sizeof(int), 0);
+					Connector.Send(mess.c_str(), len, 0);
+					//Load dữ liệu mặc định của ngày yêu cầu lên server
+					wstring s = ReadDataFile(FileName);
+					wstring_convert<codecvt_utf8<wchar_t>, wchar_t> converter;
+					wstring Type = converter.from_bytes(tokens[1]);
+					GoldData.clear();
+					GoldData = GetDataByTypeGold(s, Type);
+					SendGoldData();
+				}
 			}
 		}
 		//Xử lý yêu cầu thoát từ client

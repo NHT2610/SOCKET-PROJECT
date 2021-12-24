@@ -1,9 +1,8 @@
-﻿  ClientSocket.cpp
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(48,23): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(62,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(74,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(80,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(97,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(109,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\ĐỒ ÁN SOCKET\Client\Client\ClientSocket.cpp(115,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+﻿  MainDialog.cpp
+D:\ĐỒ ÁN SOCKET\Client\Client\MainDialog.cpp(58,2): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Client\Client\MainDialog.cpp(58,2): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Client\Client\MainDialog.cpp(59,2): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Client\Client\MainDialog.cpp(59,2): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Client\Client\MainDialog.cpp(67,3): warning C4566: character represented by universal-character-name '\u0110' cannot be represented in the current code page (1252)
+D:\ĐỒ ÁN SOCKET\Client\Client\MainDialog.cpp(67,3): warning C4566: character represented by universal-character-name '\u1ED2' cannot be represented in the current code page (1252)
   Client.vcxproj -> D:\ĐỒ ÁN SOCKET\Client\x64\Debug\Client.exe

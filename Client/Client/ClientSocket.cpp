@@ -158,12 +158,21 @@ ClientSocket::GoldInformations ClientSocket::ParseData(wstring s) {
 
 //Hàm gửi yêu cầu tỷ giá vàng, và nhận về mảng dữ liệu
 vector<ClientSocket::GoldInformations> ClientSocket::GetDataFromServer(string message) {
+	vector<GoldInformations> DataRecv;
 	int len = int(message.length());
 	//Gửi yêu cầu đến server với thông tin ngày tháng năm và loại vàng
 	soc.Send(&len, sizeof(int), 0);
 	soc.Send(message.c_str(), len, 0);
 
-	vector<GoldInformations> DataRecv;
+	//Nhận reply từ server xem ngày truy cập có dữ liệu giá vàng hay không
+	len = 0;
+	soc.Receive(&len, sizeof(int), 0);
+	char* temp1 = new char[len + 1]; temp1[len] = '\0';
+	soc.Receive(temp1, len, 0);
+
+	//Không có dữ liệu cho ngày truy cập
+	if (strcmp(temp1, "NO_INFORMATION") == 0) { return DataRecv; }
+	
 	wstring ngay, loai, mua, ban;
 	wstring field;
 	len = 0;
