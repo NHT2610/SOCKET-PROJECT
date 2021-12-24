@@ -36,9 +36,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CEdit ServerActivity;
-	afx_msg void OnBnClickedStop();
+	//afx_msg void OnBnClickedStop();
 	afx_msg void OnBnClickedStart();
-	ServerManager* m_pServerSock;	
+	ServerManager* m_pServerSock[5];
 	void AppendTextToEditCtrl(CEdit& edit, LPCTSTR pszText);
 	void ShowServerInfo(string sValue);
 	afx_msg void OnBnClickedStopserver();

@@ -155,7 +155,7 @@ void Login::OnBnClickedLogin()
 		MessageBox(L"Ban CHUA dien Ten dang nhap!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	else if (checkUsername(username) == 2) {
-		MessageBox(L"Ten dang nhap KHONG duoc chua khoang trang!", L"Error", MB_OK | MB_ICONERROR);
+		MessageBox(L"Ten dang nhap KHONG duoc chua khoang trang hoac ky tu la!", L"Error", MB_OK | MB_ICONERROR);
 	}
 	if (checkPassword(password) == 1) {
 		MessageBox(L"Ban CHUA dien Mat khau!", L"Error", MB_OK | MB_ICONERROR);

@@ -52,8 +52,7 @@ END_MESSAGE_MAP()
 
 
 CServerDlg::CServerDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_SERVER_DIALOG, pParent),
-	m_pServerSock(NULL)
+	: CDialogEx(IDD_SERVER_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDI_ICON1);
 }
@@ -68,7 +67,7 @@ BEGIN_MESSAGE_MAP(CServerDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(DISCONNECT, &CServerDlg::OnBnClickedStop)
+	//ON_BN_CLICKED(DISCONNECT, &CServerDlg::OnBnClickedStop)
 	ON_BN_CLICKED(START, &CServerDlg::OnBnClickedStart)
 	ON_BN_CLICKED(STOPSERVER, &CServerDlg::OnBnClickedStopserver)
 END_MESSAGE_MAP()
@@ -179,37 +178,50 @@ HCURSOR CServerDlg::OnQueryDragIcon()
 
 
 
-void CServerDlg::OnBnClickedStop()
-{
-	// TODO: Add your control notification handler code here
-	m_pServerSock->ServerSend("DISCONNECT");
-	ShowServerInfo("<<< Server da ngung ket noi cua Client");
-	m_pServerSock->ConnectorClose();
-}
+//void CServerDlg::OnBnClickedStop()
+//{
+//	// TODO: Add your control notification handler code here
+//	m_pServerSock->ServerSend("DISCONNECT");
+//	ShowServerInfo("<<< Server da ngung ket noi cua Client");
+//	m_pServerSock->ConnectorClose();
+//}
 
 //Khởi tạo kết nối, cho phép client kết nối đến server
 void CServerDlg::OnBnClickedStart()
 {
 	// TODO: Add your control notification handler code here
 	//Khởi tạo server
-	m_pServerSock = new ServerManager(this);
-	if (!m_pServerSock->ServerCreate(12345)) {
+	CSocket Server;
+	CSocket Client;
+	DWORD ThreadID;
+	HANDLE ThreadStatus;
+	int count = 1;
+	if (!Server.Create(12345)) {
 		MessageBox(L"Khởi tạo server THẤT BẠI!", L"Information", MB_OK | MB_ICONINFORMATION);
 		exit(1);
 	}
 	ShowServerInfo("DANG DOI KET NOI ....\r\n");
-	m_pServerSock->ServerListen();
 	try
 	{
-		if (m_pServerSock->ServerAccept()) {
-			ShowServerInfo(">>> Client da ket noi\r\n");
-			m_pServerSock->MainProcess();
+		while (count <= 5) {
+			Server.Listen();
+			if (Server.Accept(Client)) {
+				m_pServerSock[count] = new ServerManager(this);
+				ShowServerInfo(">>>Client " + to_string(count) + " da ket noi\r\n");
+				m_pServerSock[count]->hConnected = new SOCKET();
+				*m_pServerSock[count]->hConnected = Client.Detach();
+				m_pServerSock[count]->CountThread = count;
+				ThreadStatus = CreateThread
+				(NULL, 0, ThreadProccess, m_pServerSock[count], 0, &ThreadID);
+			}
+			++count;
 		}
 	}
 	catch (const std::exception&)
 	{
 		MessageBox(L"Client mat ket noi!", L"Information", MB_OK | MB_ICONINFORMATION);
 	}
+	Server.Close();
 }
 
 
@@ -230,6 +242,6 @@ void CServerDlg::OnBnClickedStopserver()
 	// TODO: Add your control notification handler code here
 	puts("<<< Server STOP!");
 	ShowServerInfo("<<< Server STOP!");
-	m_pServerSock->ServerClose();
+	
 	exit(1);
 }

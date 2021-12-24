@@ -12,7 +12,6 @@
 #include <io.h>
 #include <locale>
 #include <codecvt>
-#include <curl/curl.h>
 
 class CServerDlg;
 using namespace std;
@@ -31,7 +30,6 @@ public:
 		string password;
 	};
 private:
-	CSocket Server;
 	CSocket Connector;
 	vector<Account> AccountData;
 	fstream Obj;
@@ -46,20 +44,23 @@ public:
 	ServerManager(CServerDlg* dialog);
 	~ServerManager();
 
-	bool ServerCreate(int PORT);
+	int CountThread;
+	SOCKET* hConnected;
+	/*bool ServerCreate(int PORT);
 	void ServerClose();
 	void ConnectorClose();
 	bool ServerListen();
-	bool ServerAccept();
+	bool ServerAccept();*/
 	void ServerSend(string mess);
 	void MainProcess();
 	CServerDlg* DlgTextBox;
 
 	//Các hàm xử lý dịch vụ xem giá vàng
 	void CurrentDay(int& day, int& month, int& year);
-	wstring ReadDataFile(const char* FileName);	
+	wstring ReadDataFile(const char* FileName);
 	vector<GoldInformations> GetData(wstring s, wchar_t ch);
 	vector<GoldInformations> GetDataByTypeGold(wstring s, wstring Type);
 	void SendGoldData();
 };
 
+DWORD WINAPI ThreadProccess(LPVOID lpParameter);

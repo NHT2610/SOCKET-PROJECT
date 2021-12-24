@@ -10,28 +10,28 @@ ServerManager::~ServerManager() {
 	Connector.~CSocket();
 }
 
-bool ServerManager::ServerCreate(int PORT) {
-	if (Server.Create(PORT, SOCK_STREAM, NULL)) { return TRUE; }
-	return FALSE;
-}
+//bool ServerManager::ServerCreate(int PORT) {
+//	if (Server.Create(PORT, SOCK_STREAM, NULL)) { return TRUE; }
+//	return FALSE;
+//}
+//
+//void ServerManager::ServerClose() {
+//	Server.Close();
+//}
 
-void ServerManager::ServerClose() {
-	Server.Close();
-}
+//void ServerManager::ConnectorClose() {
+//	Connector.Close();
+//}
 
-void ServerManager::ConnectorClose() {
-	Connector.Close();
-}
+//bool ServerManager::ServerListen() {
+//	if (Server.Listen()) { return TRUE; }
+//	return FALSE;
+//}
 
-bool ServerManager::ServerListen() {
-	if (Server.Listen()) { return TRUE; }
-	return FALSE;
-}
-
-bool ServerManager::ServerAccept() {
-	if (Server.Accept(Connector)) { return TRUE; }
-	return FALSE;
-}
+//bool ServerManager::ServerAccept() {
+//	if (Server.Accept(Connector)) { return TRUE; }
+//	return FALSE;
+//}
 
 void ServerManager::ServerSend(string mess) {
 	int len = int(mess.length());
@@ -109,6 +109,7 @@ bool ServerManager::CheckUsernameAndPasswordREGISTER(string& user) {
 
 //Xử lý trao đổi thông tin giữa server và client
 void ServerManager::MainProcess() {
+	Connector.Attach(*hConnected);
 	int len = 0;
 	while (true) {
 		//Nhận độ dài chuỗi yêu cầu chức năng
@@ -118,7 +119,10 @@ void ServerManager::MainProcess() {
 
 		/*Xử lý yêu cầu đăng nhập từ client*/
 		if (strcmp(temp1, "LOGIN") == 0) {
-			DlgTextBox->ShowServerInfo(">>> Client dang nhap\r\n");
+			//Cập nhật lại dữ liệu mới
+			AccountData.clear();
+			GetAccountDataFromFile("ACCOUNT.txt");
+			DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread) + " dang nhap\r\n");
 			delete[] temp1;
 			//Nhận thông điệp về độ dài chuỗi tin nhắn từ client
 			Connector.Receive(&len, 4, 0);
@@ -133,21 +137,24 @@ void ServerManager::MainProcess() {
 			int CheckLogin = CheckUsernameAndPasswordLOGIN(tokens[0], tokens[1]);
 			//Lỗi nhập sai mật khẩu 
 			if (CheckLogin == 1) {
-				DlgTextBox->ShowServerInfo("<<< Client da nhap sai mat khau!\r\n");
+				DlgTextBox->ShowServerInfo("<<< Client " + to_string(CountThread)
+					+ " da nhap sai mat khau!\r\n");
 				len = mess[1].length();
 				Connector.Send(&len, sizeof(int), 0);
 				Connector.Send(mess[1].c_str(), len, 0);
 			}
 			//Lỗi tài khoản không tồn tại
 			else if (CheckLogin == 2) {
-				DlgTextBox->ShowServerInfo("<<< Client dang nhap tai khoan chua dang ky!\r\n");
+				DlgTextBox->ShowServerInfo("<<< Client " + to_string(CountThread)
+					+ " dang nhap tai khoan chua dang ky!\r\n");
 				len = mess[0].length();
 				Connector.Send(&len, sizeof(int), 0);
 				Connector.Send(mess[0].c_str(), len, 0);
 			}
 			//Đăng nhập thành công
 			else {
-				DlgTextBox->ShowServerInfo("<<< Client dang nhap thanh cong\r\n");
+				DlgTextBox->ShowServerInfo("<<< Client " + to_string(CountThread)
+					+ " dang nhap thanh cong\r\n");
 				len = mess[2].length();
 				Connector.Send(&len, sizeof(int), 0);
 				Connector.Send(mess[2].c_str(), len, 0);
@@ -155,7 +162,11 @@ void ServerManager::MainProcess() {
 		}
 		/*Xử lý yêu cầu đăng ký từ client*/
 		else if (strcmp(temp1, "REGISTER") == 0) {
-			DlgTextBox->ShowServerInfo(">>> Client dang ky tai khoan\r\n");
+			//Cập nhật lại dữ liệu mới
+			AccountData.clear();
+			GetAccountDataFromFile("ACCOUNT.txt");
+			DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread)
+				+ " dang ky tai khoan\r\n");
 			delete[] temp1;
 			Connector.Receive(&len, 4, 0);
 			char* temp2 = new char[len + 1];
@@ -167,7 +178,8 @@ void ServerManager::MainProcess() {
 			string mess[] = { "error","ok" };
 			//Đăng ký thành công, tài khoản mới được ghi xuống file ACCOUNT.txt
 			if (CheckRegister) {
-				DlgTextBox->ShowServerInfo("<<< Client dang ky tai khoan thanh cong!\r\n");
+				DlgTextBox->ShowServerInfo("<<< Client " + to_string(CountThread)
+					+ " dang ky tai khoan thanh cong!\r\n");
 				AccountData.push_back({ tokens[0],tokens[1] });
 				WriteAccountDataToFile("ACCOUNT.txt");
 				len = mess[1].length();
@@ -176,7 +188,8 @@ void ServerManager::MainProcess() {
 			}
 			//Đăng ký thất bại
 			else {
-				DlgTextBox->ShowServerInfo("<<< Client dang ky tai khoan that bai!\r\n");
+				DlgTextBox->ShowServerInfo("<<< Client " + to_string(CountThread)
+					+ " dang ky tai khoan that bai!\r\n");
 				len = mess[0].length();
 				Connector.Send(&len, sizeof(int), 0);
 				Connector.Send(mess[0].c_str(), len, 0);
@@ -194,8 +207,8 @@ void ServerManager::MainProcess() {
 			vector<string> tokens = split_string(temp2, '|');
 			delete[] temp2;
 			if (strcmp(tokens[1].c_str(), "DEFAULT") == 0) {
-				DlgTextBox->ShowServerInfo(">>> Client yeu cau thong tin ty gia vang "
-					+ tokens[0] + "\r\n");
+				DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread)
+					+ " yeu cau thong tin ty gia vang " + tokens[0] + "\r\n");
 				string TempFileName = "DataBase\\" + tokens[0] + ".txt";
 				const char* FileName = TempFileName.c_str();
 				//Load dữ liệu mặc định của ngày yêu cầu lên server
@@ -205,8 +218,8 @@ void ServerManager::MainProcess() {
 				SendGoldData();
 			}
 			else if (strcmp(tokens[1].c_str(), "DOJI") == 0) {
-				DlgTextBox->ShowServerInfo(">>> Client yeu cau thong tin ty gia vang "
-					+ tokens[1] + " " + tokens[0] + "\r\n");
+				DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread)
+					+ " yeu cau thong tin ty gia vang " + tokens[1] + " " + tokens[0] + "\r\n");
 				string TempFileName = "DataBase\\" + tokens[0] + ".txt";
 				const char* FileName = TempFileName.c_str();
 				//Load dữ liệu mặc định của ngày yêu cầu lên server
@@ -218,8 +231,8 @@ void ServerManager::MainProcess() {
 				SendGoldData();
 			}
 			else if (strcmp(tokens[1].c_str(), "SJC") == 0) {
-				DlgTextBox->ShowServerInfo(">>> Client yeu cau thong tin ty gia vang "
-					+ tokens[1] + " " + tokens[0] + "\r\n");
+				DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread)
+					+ " yeu cau thong tin ty gia vang " + tokens[1] + " " + tokens[0] + "\r\n");
 				string TempFileName = "DataBase\\" + tokens[0] + ".txt";
 				const char* FileName = TempFileName.c_str();
 				//Load dữ liệu mặc định của ngày yêu cầu lên server
@@ -233,28 +246,34 @@ void ServerManager::MainProcess() {
 		}
 		//Xử lý yêu cầu thoát từ client
 		else if (strcmp(temp1, "QUIT") == 0) {
-			DlgTextBox->ShowServerInfo(">>> Client yeu cau thoat\r\n");
+			DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread) + " yeu cau thoat\r\n");
 			delete[] temp1;
 			Connector.Receive(&len, 4, 0);
 			char* temp2 = new char[len + 1];
 			Connector.Receive(temp2, len, 0); temp2[len] = '\0';
 			if (strcmp(temp2, "YES") == 0) {//Client đồng ý thoát
-				DlgTextBox->ShowServerInfo(">>> Client da thoat!\r\n");
+				DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread) + " da thoat!\r\n");
 				delete[] temp2;
 				break;
 			}
 			else {//Client không thoát
-				DlgTextBox->ShowServerInfo(">>> Client da huy thoat!\r\n");
+				DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread) + " da huy thoat!\r\n");
 				delete[] temp2;
 			}
 		}
 		else if (strcmp(temp1, "DISCONNECTED") == 0) {
 			delete[] temp1;
-			DlgTextBox->ShowServerInfo(">>> Client bi mat ket noi!\r\n");
+			DlgTextBox->ShowServerInfo(">>> Client " + to_string(CountThread) + " bi mat ket noi!\r\n");
 			break;
 		}
 	}
 	Connector.Close();
+}
+
+DWORD WINAPI ThreadProccess(LPVOID lpParameter) {
+	ServerManager* myServer = (ServerManager*)lpParameter;
+	myServer->MainProcess();
+	return 0;
 }
 
 //Lấy ngày, tháng, năm của ngày hôm nay
@@ -331,7 +350,7 @@ vector<ServerManager::GoldInformations> ServerManager::GetDataByTypeGold
 			if (FieldCount == 5) {
 				string a = converter.to_bytes(loai);
 				string b = converter.to_bytes(Type);
-				if (strstr(a.c_str(),b.c_str())) {
+				if (strstr(a.c_str(), b.c_str())) {
 					DataResult.push_back({ ngay,loai,mua,ban });
 				}
 				ngay = L""; loai = L""; mua = L""; ban = L"";
